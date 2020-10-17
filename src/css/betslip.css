@@ -1,0 +1,13 @@
+table.bet tr td{
+    border:none;
+    padding: 0px;
+    text-align: left;
+}
+
+.selected-bet {
+   background-color: rgba(242, 15, 37, 0.2); 
+}
+
+table.bet tr td.odds {
+    text-align: right;
+}
