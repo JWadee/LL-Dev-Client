@@ -12,11 +12,6 @@ const LiveContest = (props) => {
     const match = useRouteMatch();
     const [display, setDisplay] = useState(false);
 
-    //Set display to true after 3 seconds
-    setTimeout(function() {
-        setDisplay(true)
-    }, 1000);
-
     //Function to run on render and fetch contest + contestLeagues + contestBets
     useEffect(()=>{
         const fetchContest = async () => {
@@ -86,6 +81,7 @@ const LiveContest = (props) => {
         //set upcoming and inplay
         props.setUpcoming(upcoming);
         props.setInplay(inplay);
+        setDisplay(true);
     }
 
     //run whenever leagues or contest is set, if contest is not empty fetch fixtures by league w/ time frame
