@@ -21,7 +21,7 @@ const NavBar = (props) => {
       async function fetchPermissions(){
           try {
           const token = await getTokenSilently();
-          const response = await fetch("http://api.lineleaders.net/accounts/permissions", {
+          const response = await fetch("https://api.lineleaders.net/accounts/permissions", {
           headers: {
               Authorization: `Bearer ${token}`
           }
@@ -37,7 +37,7 @@ const NavBar = (props) => {
       async function fetchDetails(){
           try {
             const token = await getTokenSilently();
-            const response = await fetch("http://api.lineleaders.net/accounts/details", {
+            const response = await fetch("https://api.lineleaders.net/accounts/details", {
             headers: {
                 Authorization: `Bearer ${token}`
             }

@@ -11,7 +11,7 @@ const Lobby = () => {
     //fetch open contests on initial render
     useEffect(()=>{
         const fetchOpenContests = async () => {
-            const response = await fetch('http://api.lineleaders.net/contests/open');
+            const response = await fetch('https://api.lineleaders.net/contests/open');
             const data = await response.json(); 
             //set contest rows state array
             setContestRows(data);

@@ -21,7 +21,7 @@ const ContestsPage = (props) => {
 
     useEffect(()=>{
         const fetchMyContests = async ()=> {
-            const response = await fetch('http://api.lineleaders.net/contests/myContests?ID='+props.accountID);
+            const response = await fetch('https://api.lineleaders.net/contests/myContests?ID='+props.accountID);
             const contests = await response.json();
             setContests(contests);
         }

@@ -145,7 +145,7 @@ const BetSlip = (props) => {
             bets: records
         }
 
-        const url ='http://api.lineleaders.net/bets/create';
+        const url ='https://api.lineleaders.net/bets/create';
         const options = {
             method:'POST',
             headers:{
