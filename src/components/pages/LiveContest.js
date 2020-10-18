@@ -15,19 +15,19 @@ const LiveContest = (props) => {
     //Function to run on render and fetch contest + contestLeagues + contestBets
     useEffect(()=>{
         const fetchContest = async () => {
-            const response = await fetch('https://lineleaders.net/dev-server/contests/byID?id='+match.params.contestid);
+            const response = await fetch('http://api.lineleaders.net/contests/byID?id='+match.params.contestid);
             const data = await response.json();
             props.setContest(data)
             fetchBets();
         }
         const fetchLeagues = async () =>{
-            const response = await fetch('https://lineleaders.net/dev-server/contests/contestLeagues/byID?id='+match.params.contestid)
+            const response = await fetch('http://api.lineleaders.net/contests/contestLeagues/byID?id='+match.params.contestid)
             const data = await response.json();
             props.setLeagues(data)
         }
         
         const fetchBets = async ()=> {
-            const response = await fetch('https://lineleaders.net/dev-server/bets/byEntry?entryid='+match.params.entryid);
+            const response = await fetch('http://api.lineleaders.net/bets/byEntry?entryid='+match.params.entryid);
             const bets = await response.json();
             //separate into open and settled and set redux state
             let open = [];
@@ -99,7 +99,7 @@ const LiveContest = (props) => {
                         start:props.contest.dtmStart,
                         end: props.contest.dtmEnd
                     }
-                    const url ='https://lineleaders.net/dev-server/fixtures/byLeagues/withTimeFrame'
+                    const url ='http://api.lineleaders.net/fixtures/byLeagues/withTimeFrame'
                     const options = {
                         method:'POST',
                         headers:{

@@ -43,13 +43,13 @@ const CreateContest = (props) => {
     //Run on initial render, fetch contest types
     useEffect(()=>{
         const fetchContestTypes = async() =>{
-            const response = await fetch('https://lineleaders.net/dev-server/contests/types');
+            const response = await fetch('http://api.lineleaders.net/contests/types');
             const data = await response.json();
             setTypes(data);
         }
 
         const fetchSports = async () => {
-            const response = await fetch('https://lineleaders.net/dev-server/sports/');
+            const response = await fetch('http://api.lineleaders.net/sports/');
             const data = await response.json();
             setSports(data)
         }
@@ -100,7 +100,7 @@ const CreateContest = (props) => {
             }
 
             //api parameters to create game
-            const url ='https://lineleaders.net/dev-server/contests/create'
+            const url ='http://api.lineleaders.net/contests/create'
             const options = {
                 method:'POST',
                 headers:{

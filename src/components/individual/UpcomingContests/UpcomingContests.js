@@ -52,7 +52,7 @@ const OpenContests = (props) => {
             }
         }
 
-        const url = "https://lineleaders.net/dev-server/contests/enter";
+        const url = "http://api.lineleaders.net/contests/enter";
 
         //enter contest
         fetch(url, opts)

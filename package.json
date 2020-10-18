@@ -44,5 +44,5 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "https://lineleaders.net/dev-server"
+  "proxy": "http://api.lineleaders.net"
 }
