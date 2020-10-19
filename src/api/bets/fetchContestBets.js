@@ -3,7 +3,7 @@ formats bet into bets object containing open and settled bets
 returns bets object
 */
 const fetchContestBets = async(entryid) => {
-    const response = await fetch('/bets/byEntry?entryid='+entryid);
+    const response = await fetch('https://api.lineleaders.net/bets/byEntry?entryid='+entryid);
     const json = await response.json();
     //separate into open and settled and set redux state
     
