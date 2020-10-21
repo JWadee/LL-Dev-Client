@@ -5,7 +5,6 @@ import { Router, Route, Switch } from "react-router-dom";
 import history from "./utils/history";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-widgets/dist/css/react-widgets.css';
-import './css/custom.css';
 import {Container} from 'react-bootstrap';
 
 //Components

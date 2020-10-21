@@ -55,12 +55,11 @@ const NavBar = (props) => {
   },[])
   
   return (
-    <Navbar className="main-nav">
-
-    <Navbar.Brand>Line Leaders</Navbar.Brand> 
-    <Navbar.Collapse>
-      <Nav className="mr-auto">
-        
+    <Navbar className="main-nav" expand="md" sticky="top" bg="light">
+      <Navbar.Brand>LineLeaders</Navbar.Brand> 
+      <Navbar.Toggle />
+      <Navbar.Collapse>
+        <Nav className="mr-auto">
           {/* Show regardless of login state */}
 
           {/* Show when logged in */}
@@ -92,9 +91,9 @@ const NavBar = (props) => {
           {!isAuthenticated && (
             <Nav.Link onClick={() => loginWithRedirect({})}>Log in</Nav.Link>
           )}
-      </Nav>
-    </Navbar.Collapse>
-  </Navbar>
+        </Nav>
+      </Navbar.Collapse>
+    </Navbar>
   );
 };
 
