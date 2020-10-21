@@ -7,6 +7,7 @@ import Book from '../individual/ActiveContest/Book/Book';
 import { useRouteMatch } from "react-router-dom";
 import { connect } from 'react-redux';
 import isEmpty from '../../utils/isEmpty';
+import formatCurrency from '../../utils/formatCurrency';
 
 const LiveContest = (props) => {
     const match = useRouteMatch();
@@ -21,7 +22,7 @@ const LiveContest = (props) => {
             fetchBets();
         }
         const fetchLeagues = async () =>{
-            const response = await fetch('https://api.lineleaders.net/contests/contestLeagues/byID?id='+match.params.contestid)
+            const response = await fetch('https://api.lineleaders.net/contests/contestLeagues/byID?id='+match.params.contestid);
             const data = await response.json();
             props.setLeagues(data)
         }
@@ -44,10 +45,22 @@ const LiveContest = (props) => {
             props.setSettledBets(settled);
         }
 
+
+        
         fetchContest();
         fetchLeagues();
+        fetch_leaderboards();
     },[])
     
+    //Function to fetch leaderboards
+    const fetch_leaderboards = async() => {
+        const response = await fetch('https://api.lineleaders.net/contests/leaderboards/?id='+match.params.contestid);
+        let leaderboards = await response.json();
+        if(leaderboards.length > 0){
+            props.setLeaderboards(leaderboards)
+        }
+    }
+
     //funciton to separate into upcoming and inplay fixtures by leagues
     const organizeFixtures = (leagueFixts) => {
         let upcoming = [];
@@ -110,7 +123,6 @@ const LiveContest = (props) => {
                     //call api
                     const response = await fetch(url, options);
                     const leagueFixts = await response.json();
-                    console.log(leagueFixts)
                     //organize fixtures and set upcoming + inplay
                     organizeFixtures(leagueFixts);
                 }
@@ -123,7 +135,7 @@ const LiveContest = (props) => {
     //Run on settled bets change, calculate bankroll and update store
     useEffect(()=>{
         //calculate bankroll
-        let bankroll = props.contest.decInitialBankRoll;
+        let bankroll = 0;
         props.settledBets.forEach(bet=>{
             //update bankroll
             if(bet.result === "W" ){
@@ -140,7 +152,7 @@ const LiveContest = (props) => {
     //Run on open bets or bankroll change, calculate available 
     useEffect(()=>{
         if(!isNaN(props.bankroll)){
-            let available = parseFloat(props.bankroll);
+            let available = parseFloat(props.bankroll) + parseFloat(props.contest.decInitialBankRoll);
             props.openBets.forEach(bet=>{
                 available = available - parseFloat(bet.wager)    
             })
@@ -152,8 +164,8 @@ const LiveContest = (props) => {
         return (
             <>
                 <h3>{props.contest.strContestName}</h3>
-                <br/><b>Available:</b> ${props.available}
-                <b> Bankroll:</b> ${props.bankroll}
+                <br/><b>Available:</b> {formatCurrency(props.available)}
+                <b> Bankroll:</b> {formatCurrency(props.bankroll)}
 
                 <Tabs fill defaultActiveKey="book" id="contestsTab">
                     <Tab eventKey="book" title="BOOK">
@@ -182,6 +194,7 @@ const LiveContest = (props) => {
 const mapStateToProps = (state) => {
     return {
       contest: state.contest.contest,
+      leaderboards: state.contest.leaderboards,
       entryID: state.contest.entryID,
       bankroll: state.contest.bankroll,
       available: state.contest.available,
@@ -203,7 +216,8 @@ const mapStateToProps = (state) => {
       setSettledBets: bets => { dispatch({type: 'SET_SETTLED_BETS', bets: bets })},
       setLeagues: leagues => { dispatch({type: 'SET_LEAGUES', leagues:leagues})},
       setUpcoming: upcoming => {dispatch({type: 'SET_UPCOMING', upcoming:upcoming})},
-      setInplay: inplay => {dispatch({type: 'SET_INPLAY', inplay:inplay})}
+      setInplay: inplay => {dispatch({type: 'SET_INPLAY', inplay:inplay})},
+      setLeaderboards: leaderboards => {dispatch({type: 'SET_LEADERBOARDS', leaderboards:leaderboards})}
     }
   }
 

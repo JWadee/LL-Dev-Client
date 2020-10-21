@@ -1,5 +1,6 @@
 const initValues  = {
     contest: {}, 
+    leaderboards:[],
     openBets: [],    
     settledBets: [],
     entryID: null,
@@ -44,6 +45,11 @@ const contestReducer = (state = initValues, action) =>{
         }
         case 'SET_INPLAY': {
             state = {...state, inplayFixts: action.inplay}
+        }
+        case 'SET_LEADERBOARDS': {
+            if(typeof action.leaderboards !== "undefined"){
+                state = {...state, leaderboards: action.leaderboards}
+            }
         }
         default : break; 
     }
