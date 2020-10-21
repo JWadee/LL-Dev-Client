@@ -7,7 +7,7 @@ import '../../../css/global/tables.css'
 const Leaderboard = (props) => {
     console.log(props)
     return (
-        <Table hover>
+        <Table responsive>
             <thead>
                 <tr>
                     <th>Place</th>

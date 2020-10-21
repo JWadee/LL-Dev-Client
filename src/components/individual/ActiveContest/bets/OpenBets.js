@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 
 const OpenBets = (props) => {    
     return (
-        <Table>
+        <Table responsive>
             <thead>
                 <tr>
                     <th>Type</th>

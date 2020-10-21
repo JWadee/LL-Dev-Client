@@ -6,7 +6,7 @@ import { LinkContainer } from 'react-router-bootstrap';
 const MyLiveContests = (props) => {
 
     return (
-        <Table hover>
+        <Table responsive>
             <thead>
                 <tr>
                     <th>Contest Name</th>

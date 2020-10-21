@@ -22,7 +22,7 @@ const MyUpcomingContests = (props) => {
     });
 
     return (
-        <Table hover>
+        <Table responsive>
             <thead>
                 <tr>
                     <th>Contest Name</th>

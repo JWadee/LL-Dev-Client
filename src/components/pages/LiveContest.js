@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {Tabs, Tab, Spinner} from 'react-bootstrap';
+import {Tabs, Tab, Spinner, Form, Col} from 'react-bootstrap';
 import Leaderboard from '../individual/ActiveContest/Leaderboard';
 import SettledBets from '../individual/ActiveContest/bets/SettledBets';
 import OpenBets from '../individual/ActiveContest/bets/OpenBets';
@@ -12,6 +12,7 @@ import formatCurrency from '../../utils/formatCurrency';
 const LiveContest = (props) => {
     const match = useRouteMatch();
     const [display, setDisplay] = useState(false);
+    const [activeTab, setActiveTab] = useState('book');
 
     //Function to run on render and fetch contest + contestLeagues + contestBets
     useEffect(()=>{
@@ -166,8 +167,21 @@ const LiveContest = (props) => {
                 <h3>{props.contest.strContestName}</h3>
                 <br/><b>Available:</b> {formatCurrency(props.available)}
                 <b> Bankroll:</b> {formatCurrency(props.bankroll)}
-
-                <Tabs fill defaultActiveKey="book" id="contestsTab">
+                {/* Display when screens are md or smaller */}
+                <Form className="hidden-lg">
+                    <Form.Row>                    
+                            <Col>
+                                <Form.Control as="select" onChange={(e)=>setActiveTab(e.target.value)}>
+                                    <option key="book" value="book">Book</option>
+                                    <option key="open" value="open">{"Open ("+props.openBets.length+")"}</option>
+                                    <option key="settled" value="settled">Settled</option>
+                                    <option key="leaderboard" value="leaderboard">Leaderboard</option>
+                                </Form.Control>
+                            </Col>
+                        </Form.Row>
+                </Form>
+                {/* Display when screens are large */}
+                <Tabs fill activeKey={activeTab} onSelect={(k)=>setActiveTab(k)} id="contestsTab" className="hidden-md">
                     <Tab eventKey="book" title="BOOK">
                         <Book leagues={props.leagues} inplay={props.inplayFixts} upcoming={props.upcomingFixts} /> 
                     </Tab>
@@ -181,6 +195,7 @@ const LiveContest = (props) => {
                         <Leaderboard />
                     </Tab>
                 </Tabs>
+                
             </>
         )
     }else return (

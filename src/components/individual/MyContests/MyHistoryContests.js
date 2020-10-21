@@ -4,7 +4,7 @@ import {Table} from 'react-bootstrap';
 const MyHistoryContests = (props) => {
 
     return (
-        <Table hover>
+        <Table responsive>
             <thead>
                 <tr>
                     <th>Contest Name</th>

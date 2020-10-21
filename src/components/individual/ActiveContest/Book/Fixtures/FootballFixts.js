@@ -120,7 +120,7 @@ const FootballFixts = (props) => {
 return (
     <Row>
         <Col md={12}>
-            <Table key={props.fixtures[0].league.leagueID}>
+            <Table key={props.fixtures[0].league.leagueID} responsive>
                 <tbody>
                     <tr>
                         <th>{props.league.name}</th>
