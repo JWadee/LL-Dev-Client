@@ -9,9 +9,6 @@ const MyHistoryContests = (props) => {
                 <tr>
                     <th>Contest Name</th>
                     <th>Style</th>
-                    <th>Place</th>
-                    <th>$ Won</th>
-                    <th>Final Bankroll</th>
                 </tr>
             </thead>
             <tbody>
@@ -19,10 +16,6 @@ const MyHistoryContests = (props) => {
                     <tr key={contest.intContestID}>
                         <td>{contest.strContestName}</td>
                         <td>{contest.strContestType}</td>
-                        <th>need place</th>
-                        <th>need calc</th>
-                        <td>$ need earnings</td>
-                        <td>$ need bankroll</td>
                     </tr>
                 ))}
             </tbody>

@@ -29,7 +29,6 @@ const MyUpcomingContests = (props) => {
                     <th>Live In</th>
                     <th>Game Style</th>
                     <th>Entry Fee</th>
-                    <th>Entries</th>
                     <th>Prizes</th>
                 </tr>
             </thead>
@@ -40,7 +39,6 @@ const MyUpcomingContests = (props) => {
                         <td id={"countdown"+i}></td>
                         <td>{contest.strContestType}</td>
                         <td>${contest.decEntryFee}</td>
-                        <td>calc entries</td>
                         <td>${contest.decPrizePool}</td>
                     </tr>
                 ))}

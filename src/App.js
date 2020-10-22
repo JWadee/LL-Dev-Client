@@ -7,6 +7,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-widgets/dist/css/react-widgets.css';
 import {Container} from 'react-bootstrap';
 import './css/global/media.css'
+import './css/global/global.css'
+
 //Components
 import NavBar from './components/individual/NavBar'; 
 import Profile from './components/pages/Profile';
@@ -26,7 +28,7 @@ function App() {
     <div className="App">
       <Router history={history}>
             <NavBar />
-            <Container>
+            <Container id="main-container">
               <Switch>
                 <Route exact path="/"/>
                 <PrivateRoute path="/profile" component={Profile} />

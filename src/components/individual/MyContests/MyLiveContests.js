@@ -11,11 +11,6 @@ const MyLiveContests = (props) => {
                 <tr>
                     <th>Contest Name</th>
                     <th>Style</th>
-                    <th>Remaining</th>
-                    <th>Bankroll</th>
-                    <th>Available</th>
-                    <th>Entry Fee</th>
-                    <th>Prizes</th>
                     <th></th>
                 </tr>
             </thead>
@@ -24,11 +19,7 @@ const MyLiveContests = (props) => {
                     <tr key={contest.intContestID}>
                         <td>{contest.strContestName}</td>
                         <td>{contest.strContestType}</td>
-                        <td>{contest.dtmEnd}</td>
-                        <th>{contest.decBankroll}</th>
-                        <th>need calc</th>
-                        <td>${contest.decEntryFee}</td>
-                        <td>${contest.decPrizePool}</td>
+                        <th>{contest.decEntry}</th>
                         <td>
                             <LinkContainer to={"/live-contest/"+contest.intContestID+"/entry/"+contest.intContestPlayerID}>
                                 <Button>

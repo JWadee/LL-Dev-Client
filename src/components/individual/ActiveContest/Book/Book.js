@@ -50,7 +50,7 @@ const Book = (props) => {
 
     return (
         <Row>
-            <Col md={8}>
+            <Col md={8} sm={12}>
                 <Form>
                     <Form.Row>                    
                             <Col>
@@ -76,7 +76,7 @@ const Book = (props) => {
                     )
                 })}
             </Col>
-            <Col md={4}>
+            <Col md={4} sm={12}>
                 <BetSlip bets={bets} removeBets={removeBets}/>
             </Col>
         </ Row>

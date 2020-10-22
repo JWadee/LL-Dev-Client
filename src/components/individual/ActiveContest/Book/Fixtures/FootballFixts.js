@@ -2,16 +2,12 @@ import React from 'react';
 import {Table, Row, Form, Col} from 'react-bootstrap';
 import '../../../../../css/fixture.css';
 import '../../../../../css/dropdownArrow.css'
-import '../../../../../css/dropdownArrow.css';
+import '../../../../../css/global/fixtures.css';
 import convertOdds from '../../../../../utils/convertOdds';
 import formatHandicap from '../../../../../utils/formatHandicap';
 import isEmpty from '../../../../../utils/isEmpty';
 
 const FootballFixts = (props) => {
-    props.fixtures.forEach(fixt=>{
-        console.log(fixt.away.name)
-
-    })
 
     //function to add bet 
     const addBet = (fixture, bettype) => {
@@ -129,9 +125,9 @@ return (
                         let formattedTime = props.formatTime(fixture.time);
                         if(!isEmpty(fixture.odds.main.sp)){
                             return (
-                                <tr key={fixture.id}>
-                                    <td>{formattedTime}</td>
-                                    <td>
+                                <tr key={fixture.id} className="fixtRow">
+                                    <td className="fixtTime">{formattedTime}</td>
+                                    <td className="nestedFixt">
                                         <Table>
                                             <thead>
                                                 <tr>

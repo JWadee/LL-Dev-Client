@@ -1,9 +1,9 @@
 import React, {useEffect} from "react";
 import { useAuth0 } from "../../react-auth0-spa";
-import {Navbar, Nav, NavDropdown } from 'react-bootstrap';
+import {Navbar, Nav, NavDropdown, Image } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 import { connect } from 'react-redux';
-
+import logo from '../../images/logo.PNG';
 
 //components 
 import AccessControl from './AccessControl';
@@ -55,8 +55,10 @@ const NavBar = (props) => {
   },[])
   
   return (
-    <Navbar className="main-nav" expand="md" sticky="top" bg="light">
-      <Navbar.Brand>LineLeaders</Navbar.Brand> 
+    <Navbar className="main-nav" expand="md" sticky="top">
+      <Navbar.Brand>
+        <Image  src={logo} rounded width="100%" height="auto"/>
+      </Navbar.Brand> 
       <Navbar.Toggle />
       <Navbar.Collapse>
         <Nav className="mr-auto">

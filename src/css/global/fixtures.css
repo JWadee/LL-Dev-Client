@@ -1,0 +1,12 @@
+td.nestedFixt{
+    padding:0px;
+}
+td.fixtTime{
+    vertical-align:middle;
+    background-color:  rgba(166, 166, 166, 0.6);
+    border-radius: 5px;
+}
+tr.fixtRow{
+    margin-top: 50px !important;
+    height: 100px;
+}
