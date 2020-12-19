@@ -1,12 +1,40 @@
 td.nestedFixt{
     padding:0px;
 }
-td.fixtTime{
-    vertical-align:middle;
-    background-color:  rgba(166, 166, 166, 0.6);
-    border-radius: 5px;
+
+.fixtureTable{
+    margin-bottom: 8px !important;
+    background-color: aliceblue;
+    height: 125px;
+    font-size: .75rem;
+    text-align: left;
 }
-tr.fixtRow{
-    margin-top: 50px !important;
-    height: 100px;
+
+td.fixtTime{
+    vertical-align: middle;
+    background-color: rgba(166, 166, 166, 0.6);
+    border-radius: 5px;
+    text-align:center;
+    width: 25% !important;
+}
+
+.fixtureHeaderTable{
+    margin-bottom: 0px !important;
+    background-color: rgba(166, 166, 166, 0.6)
+}
+
+td.fixtCol{
+    width: 25% !important;
+    text-align: left;
+    vertical-align: middle;
+}
+
+td.lineCol, td.line{
+    width: 16.66% !important;
+    text-align: left;
+    vertical-align: middle;
+}
+
+th.timeHeader{
+    width: 25% !important;
 }

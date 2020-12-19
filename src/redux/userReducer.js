@@ -2,7 +2,9 @@ const initValues  = {
     ID: null, 
     username: '',
     balance: null,
-    permissions:  []
+    permissions:  [],
+    openBets: [],    
+    settledBets: []
 }
 
 const userReducer = (state = initValues, action) =>{
@@ -23,7 +25,15 @@ const userReducer = (state = initValues, action) =>{
             state = {...state, balance: action.balance}
             break;
         }
-        default : break; 
+        case 'SET_OPEN_BETS': {
+            state =  {...state, openBets: action.bets};
+            break;
+        }
+        case 'SET_SETTLED_BETS': {
+            state =  {...state, settledBets: action.bets};
+            break;
+        }
+        default : break;
     }
     return state;
 }

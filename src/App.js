@@ -17,6 +17,7 @@ import AdminPage from './components/pages/Admin';
 import ContestsPage from './components/pages/ContestsPage';
 import Lobby from './components/pages/LobbyPage';
 import LiveContest from './components/pages/LiveContest';
+import Book from './social/Book/Book';
 
 function App() {
   const { loading } = useAuth0();
@@ -31,11 +32,13 @@ function App() {
             <Container id="main-container">
               <Switch>
                 <Route exact path="/"/>
+                <Route path="/book" component={Book} />
                 <PrivateRoute path="/profile" component={Profile} />
-                <PrivateRoute path="/lobby" component={Lobby} />
-                <PrivateRoute path="/contests" component={ContestsPage} />
                 <PrivateRoute path="/admin" component={AdminPage} /> 
-                <PrivateRoute path="/live-contest/:contestid/entry/:entryid" component={LiveContest} /> 
+
+                {/* <PrivateRoute path="/lobby" component={Lobby} />
+                <PrivateRoute path="/contests" component={ContestsPage} />
+                <PrivateRoute path="/live-contest/:contestid/entry/:entryid" component={LiveContest} />  */}
               </Switch>
             </Container>
       </Router>
