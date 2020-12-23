@@ -5,7 +5,7 @@ import { Router, Route, Switch } from "react-router-dom";
 import history from "./utils/history";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-widgets/dist/css/react-widgets.css';
-import {Container} from 'react-bootstrap';
+import {Container, Row} from 'react-bootstrap';
 import './css/global/media.css'
 import './css/global/global.css'
 
@@ -26,23 +26,23 @@ function App() {
     return <div>Loading...</div>;
   }
   return (
-    <div className="App">
+    <Container className="App">
       <Router history={history}>
-            <NavBar />
-            <Container id="main-container">
-              <Switch>
-                <Route exact path="/"/>
-                <Route path="/book" component={Book} />
-                <PrivateRoute path="/profile" component={Profile} />
-                <PrivateRoute path="/admin" component={AdminPage} /> 
+        <Row>
+          <NavBar />
+        </Row>
+          <Switch>
+            <Route exact path="/"/>
+            <Route path="/book" component={Book} />
+            <PrivateRoute path="/profile" component={Profile} />
+            <PrivateRoute path="/admin" component={AdminPage} /> 
 
-                {/* <PrivateRoute path="/lobby" component={Lobby} />
-                <PrivateRoute path="/contests" component={ContestsPage} />
-                <PrivateRoute path="/live-contest/:contestid/entry/:entryid" component={LiveContest} />  */}
-              </Switch>
-            </Container>
+            {/* <PrivateRoute path="/lobby" component={Lobby} />
+            <PrivateRoute path="/contests" component={ContestsPage} />
+            <PrivateRoute path="/live-contest/:contestid/entry/:entryid" component={LiveContest} />  */}
+          </Switch>
       </Router>
-    </div>
+    </Container>
   );
 }
 

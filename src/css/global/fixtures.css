@@ -3,11 +3,33 @@ td.nestedFixt{
 }
 
 .fixtureTable{
+    display: block;
     margin-bottom: 8px !important;
-    background-color: aliceblue;
-    height: 125px;
+    max-height: 80vh;
     font-size: .75rem;
     text-align: left;
+}
+
+.fixtureTable thead th{
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    background-color: rgba(166, 166, 166);
+
+}
+
+.fixtureTable td{
+    background-color: aliceblue;
+}
+
+.fixtHeader{
+    background-color: rgba(166, 166, 166, 0.6);
+}
+
+
+tr.spacer{
+    height:10px;
 }
 
 td.fixtTime{
@@ -16,11 +38,6 @@ td.fixtTime{
     border-radius: 5px;
     text-align:center;
     width: 25% !important;
-}
-
-.fixtureHeaderTable{
-    margin-bottom: 0px !important;
-    background-color: rgba(166, 166, 166, 0.6)
 }
 
 td.fixtCol{

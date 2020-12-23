@@ -1,45 +1,8 @@
 import React, {} from 'react';
-import {Table} from 'react-bootstrap';
 import formatTime from '../../utils/formatTime';
 import isEmpty from '../../utils/isEmpty';
 import formatHandicap from '../../utils/formatHandicap';
 import '../../css/global/fixtures.css';
-
-let test = {
-    "sport_key": "basketball_ncaab",
-    "sport_nice": "NCAAB",
-    "commence_time": 1607126400,
-    "home_team": "Purdue Boilermakers",
-    "away_team": "Valparaiso Crusaders",
-    "odds": {  
-            "h2h": {
-                "home":1.02,
-                "away":13.6
-            },
-            "spreads": {
-                    "home": {
-                        "odds": 1.83,
-                        "points":-3.5
-                    },
-                    "away": {
-                        "odds": 1.92,
-                        "points":3.5
-                    }       
-                },
-            "totals": {
-                    "over":{
-                        "points": 139.5,
-                        "odds": 1.91
-                    },
-                    "under":{
-                        "points": 139.5,
-                        "odds": 1.91
-                    }
-            }
-        }
-}
-
-
 
 const Fixture = (props) => {
     let fixt = props.fixt;
@@ -130,47 +93,46 @@ const Fixture = (props) => {
     }
 
     return (                                
-        <Table responsive className="fixtureTable">
-            <tbody>
-                <tr>
-                    <td rowSpan={2} className="fixtTime">{formattedTime}</td>
-                    <td className="fixtCol">{fixt.fixture.away_team}</td>
-                    {!isEmpty(fixt.fixture.odds.spreads) ?
-                        <td className="line" id={"away-spread-"+fixt.fixture_id} onClick={()=>handleBetClick(fixt,"away-spread")}>{fixt.fixture.odds.spreads.away.points +" ("+fixt.fixture.odds.spreads.away.odds+")"}</td>      
-                            :
-                        <td className="line"></td>
-                    }
-                    {!isEmpty(fixt.fixture.odds.h2h) ?
-                        <td  className="line" id={"away-ml-"+fixt.fixture_id} onClick={()=>handleBetClick(fixt,"away-ml")} >{fixt.fixture.odds.h2h.away}</td>        
-                            :
-                        <td className="line"></td>
-                    }
-                    {!isEmpty(fixt.fixture.odds.totals) ?
-                        <td className="line" id={"over-"+fixt.fixture_id} onClick={()=>handleBetClick(fixt,"over")} >{"O"+fixt.fixture.odds.totals.points +" ("+fixt.fixture.odds.totals.over+")"}</td>       
-                            :
-                        <td className="line"></td>
-                    }
-                </tr> 
-                <tr>
-                    <td className="fixtCol">{fixt.fixture.home_team}</td>
-                    {!isEmpty(fixt.fixture.odds.spreads) ?
-                        <td className="line" id={"home-spread-"+fixt.fixture_id} onClick={()=>handleBetClick(fixt,"home-spread")}>{fixt.fixture.odds.spreads.home.points +" ("+fixt.fixture.odds.spreads.home.odds+")"}</td>      
-                            :
-                        <td className="line"></td>
-                    }
-                    {!isEmpty(fixt.fixture.odds.h2h) ?
-                        <td className="line" id={"home-ml-"+fixt.fixture_id} onClick={()=>handleBetClick(fixt,"home-ml")}>{fixt.fixture.odds.h2h.home}</td>        
-                            :
-                        <td className="line"></td>
-                    }
-                    {!isEmpty(fixt.fixture.odds.totals) ?
-                        <td className="line" id={"under-"+fixt.fixture_id} onClick={()=>handleBetClick(fixt,"under")}>{"U"+fixt.fixture.odds.totals.points +" ("+fixt.fixture.odds.totals.under+")"}</td>       
-                            :
-                        <td className="line"></td>
-                    }
-                </tr> 
-            </tbody>
-        </Table>
+        <>
+            <tr>
+                <td rowSpan={2} className="fixtTime">{formattedTime}</td>
+                <td className="fixtCol">{fixt.fixture.away_team}</td>
+                {!isEmpty(fixt.fixture.odds.spreads) ?
+                    <td className="line" id={"away-spread-"+fixt.fixture_id} onClick={()=>handleBetClick(fixt,"away-spread")}>{fixt.fixture.odds.spreads.away.points +" ("+fixt.fixture.odds.spreads.away.odds+")"}</td>      
+                        :
+                    <td className="line"></td>
+                }
+                {!isEmpty(fixt.fixture.odds.h2h) ?
+                    <td  className="line" id={"away-ml-"+fixt.fixture_id} onClick={()=>handleBetClick(fixt,"away-ml")} >{fixt.fixture.odds.h2h.away}</td>        
+                        :
+                    <td className="line"></td>
+                }
+                {!isEmpty(fixt.fixture.odds.totals) ?
+                    <td className="line" id={"over-"+fixt.fixture_id} onClick={()=>handleBetClick(fixt,"over")} >{"O"+fixt.fixture.odds.totals.points +" ("+fixt.fixture.odds.totals.over+")"}</td>       
+                        :
+                    <td className="line"></td>
+                }
+            </tr> 
+            <tr className="bottomFixtRow">
+                <td className="fixtCol">{fixt.fixture.home_team}</td>
+                {!isEmpty(fixt.fixture.odds.spreads) ?
+                    <td className="line" id={"home-spread-"+fixt.fixture_id} onClick={()=>handleBetClick(fixt,"home-spread")}>{fixt.fixture.odds.spreads.home.points +" ("+fixt.fixture.odds.spreads.home.odds+")"}</td>      
+                        :
+                    <td className="line"></td>
+                }
+                {!isEmpty(fixt.fixture.odds.h2h) ?
+                    <td className="line" id={"home-ml-"+fixt.fixture_id} onClick={()=>handleBetClick(fixt,"home-ml")}>{fixt.fixture.odds.h2h.home}</td>        
+                        :
+                    <td className="line"></td>
+                }
+                {!isEmpty(fixt.fixture.odds.totals) ?
+                    <td className="line" id={"under-"+fixt.fixture_id} onClick={()=>handleBetClick(fixt,"under")}>{"U"+fixt.fixture.odds.totals.points +" ("+fixt.fixture.odds.totals.under+")"}</td>       
+                        :
+                    <td className="line"></td>
+                }
+            </tr> 
+            <tr className="spacer"></tr>
+        </>
     )
 }
 

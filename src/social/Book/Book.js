@@ -63,8 +63,8 @@ const Book = () => {
     return (
         <Row>
             <Col md={8} sm={12}> 
-                <Table className="fixtureHeaderTable" responsive>
-                    <thead>
+                <Table className="fixtureTable" responsive>
+                    <thead className="fixtHeader">
                         <tr>
                             <th className="timeHeader"></th>
                             <th className="fixtCol">Fixture</th>
@@ -73,10 +73,13 @@ const Book = () => {
                             <th className="lineCol">Total</th>
                         </tr>
                     </thead>
+                    <tbody>
+                        {book.map(fixt=>{
+                            return <Fixture key={fixt.fixture_id} fixt={fixt} bets={bets} setBets={setBets} removeBet={removeBet}/>
+                        })}
+                    </tbody>  
                 </Table>
-                {book.map(fixt=>{
-                    return <Fixture key={fixt.fixture_id} fixt={fixt} bets={bets} setBets={setBets} removeBet={removeBet}/>
-                })}  
+
             </Col>
             <Col md={4} sm={12}>
                 <BetSlip bets={bets} removeBets={removeBets} />
