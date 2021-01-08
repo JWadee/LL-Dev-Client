@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import {Col, Form, Table} from 'react-bootstrap';
 import formatTime from '../../../utils/formatTime';
+import stringifyOddsAndPoints from '../../../utils/stringifyOddsAndPoints';
 
 const Bet = (props) => {
     const [risk, setRisk] = useState("");
@@ -54,22 +55,22 @@ const Bet = (props) => {
             <tbody>
                 <tr>
                     {(bet.type === "Spread") ? 
-                        <td onClick={()=>toggleDetails(i)}><i className="arrow right" id={"arrow"+i} ></i> {bet.bet+" "+bet.handicap}</td>
+                        <td onClick={()=>toggleDetails(i)}><i className="arrow down" id={"arrow"+i} ></i> {bet.bet+" "+stringifyOddsAndPoints(bet.handicap) + " ("+stringifyOddsAndPoints(bet.odds)+")"}</td>
                     : 
                     (bet.type === "Total") ?
-                        <td onClick={()=>toggleDetails(i)}><i className="arrow right" id={"arrow"+i} ></i> {bet.bet+" "+bet.total} </td>
+                        <td onClick={()=>toggleDetails(i)}><i className="arrow down" id={"arrow"+i} ></i> {bet.bet+" "+bet.total + " ("+stringifyOddsAndPoints(bet.odds)+")"} </td>
                     :
-                        <td onClick={()=>toggleDetails(i)}><i className="arrow right" id={"arrow"+i} ></i> {bet.bet}</td>
+                        <td onClick={()=>toggleDetails(i)}><i className="arrow down" id={"arrow"+i} ></i> {bet.bet + " ("+stringifyOddsAndPoints(bet.odds)+")"}</td>
                     }
                     <td className="odds">{bet.odds.american} <i onClick={()=>props.removeBets([bet.id])}>&times;</i></td> 
                 </tr>
                 <tr>
                     <td colSpan={2}>{bet.type}</td>
                 </tr>
-                <tr style={{display:'none'}} className={"betDetails"+i}>
+                <tr className={"betDetails"+i}>
                     <td  colSpan={2}>{bet.fixture}</td>
                 </tr>
-                <tr style={{display:'none'}} className={"betDetails"+i}>
+                <tr className={"betDetails"+i}>
                     <td colSpan={2}>{formatTime(bet.time)}</td>
                 </tr>
                 {props.slipType === "Straight" ? 

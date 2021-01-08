@@ -3,6 +3,7 @@ import {Table } from 'react-bootstrap';
 import Leg from './Leg';
 import '../../css/betsTable.css';
 import { connect } from 'react-redux';
+import stringifyOddsAndPoints from '../../utils/stringifyOddsAndPoints';
 
 const SettledBets = (props) => {    
     return (
@@ -34,7 +35,7 @@ const SettledBets = (props) => {
                             <tr className={"bet"+bet.result}>
                                 <td>{bet.type}</td>
                                 <Leg leg={leg} />
-                                <td>{bet.odds}</td>
+                                <td>{stringifyOddsAndPoints(bet.odds)}</td>
                                 <td>{"$"+parseFloat(bet.wager).toFixed(2)}</td>
                                 {bet.result === "W" ? <td>{"+$"+win}</td> :<></>}
                                 {bet.result === "L" ? <td>{"-$"+parseFloat(bet.wager).toFixed(2)}</td> :<></>}
