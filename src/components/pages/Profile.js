@@ -1,16 +1,60 @@
 import React, {useState, useEffect} from "react";
 import { useAuth0 } from "../../react-auth0-spa";
-import {Col, Form, Tabs, Tab} from 'react-bootstrap';
+import {Row, Col, Form, Tabs, Tab, Button} from 'react-bootstrap';
 import { connect } from 'react-redux';
 import OpenBets from '../../social/bets/OpenBets';
 import SettledBets from '../../social/bets/SettledBets';
+import MyPosts from '../../social/MyPosts';
+import CreatePost from '../../social/forms/createPost/CreatePost';
+import CPModal from "../../social/forms/createPost/CPModal";
 
 const Profile = (props) => {
   const { loading, user } = useAuth0();
-  const [showCreateBet, setShowCreateBet] = useState(false);
+  const [record, setRecord] = useState(String);
+  const [PL, setPL] = useState();
+  const [activeTab, setActiveTab] = useState('posts');
+  const [showCreatePost,setShowCreatePost] = useState(false);
 
-  const [display, setDisplay] = useState(false);
-  const [activeTab, setActiveTab] = useState('book');
+  useEffect(()=>{
+    const calcRecordAndPL = () =>{
+      let profitloss = 0;
+      let w =0; 
+      let l =0; 
+      let p =0; 
+
+      let rec ="";
+
+      props.settledBets.forEach(bet=>{
+        //get result and update counter
+        if(bet.result === "W"){
+          w = w+1;
+          //if bet won add amount to PL
+          let win = 0;
+          if(bet.odds > 0){
+              let dec = bet.odds/100;
+              win = parseFloat(bet.wager * dec).toFixed(2);
+          }else{
+              let dec = Math.abs(bet.odds)/100;
+              win = parseFloat(bet.wager / dec).toFixed(2);
+          }
+          profitloss = parseFloat(profitloss) + parseFloat(win);
+        }else if(bet.result === "L"){
+          l = l+1;
+          //if bet lost subtract wager from PL
+          profitloss = parseFloat(profitloss) - parseFloat(bet.wager);
+        }else p = p+1;
+      });
+      
+      if(p > 0){
+        rec = w+"-"+l+"-"+p;
+      }else rec = w+"-"+l;
+
+      setRecord(rec);
+      setPL(profitloss);
+    }
+
+    calcRecordAndPL();
+  },[props])
 
   //Function to run when user_id is set and fetch bets
   useEffect(()=>{  
@@ -35,8 +79,24 @@ const Profile = (props) => {
     fetchBets();
   },[props.user_id])
 
+  //Function to handle cancellation of creating a post
+  const handleCancellation = () => {
+    setShowCreatePost(false);
+  }
+
   return (
     <>
+      <Row>
+        <Col>
+          <img src={user.picture} alt="Profile" />
+          <p>{user.email}</p>
+        </Col>
+        <Col>
+          <p>{"Record: "+record}</p>
+          <p>{"P/L: $"+PL}</p>
+          <Button onClick={()=>setShowCreatePost(true)}>New Post</Button>
+        </Col>
+      </Row>
       <Form className="hidden-lg">
         <Form.Row>                    
           <Col>
@@ -51,7 +111,7 @@ const Profile = (props) => {
       {/* Display when screens are large */}
       <Tabs fill activeKey={activeTab} onSelect={(k)=>setActiveTab(k)} id="contestsTab" className="hidden-md">
           <Tab eventKey="posts" title="Posts">
-             
+             <MyPosts />
           </Tab>
           <Tab eventKey="open" title={"Open ("+props.openBets.length+")"}>
               <OpenBets />
@@ -60,6 +120,7 @@ const Profile = (props) => {
               <SettledBets />
           </Tab>
       </Tabs>   
+      <CPModal  close={handleCancellation} show={showCreatePost} openBets= {props.openBets}/>
     </>
   );
 };
