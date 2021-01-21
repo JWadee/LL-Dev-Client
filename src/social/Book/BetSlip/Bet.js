@@ -2,10 +2,14 @@ import React, {useState, useEffect} from 'react';
 import {Col, Form, Table} from 'react-bootstrap';
 import formatTime from '../../../utils/formatTime';
 import stringifyOddsAndPoints from '../../../utils/stringifyOddsAndPoints';
+import editIcon from '../../../images/icons/editIcon.png';
+import EditBetModal from './EditBetModal';
 
 const Bet = (props) => {
     const [risk, setRisk] = useState("");
     const [win, setWin] = useState("");
+    const [showEditBet, setShowEditBet] = useState(false);
+
     const bet = props.bet;
     //index of bet in array
     const i = props.i;
@@ -50,49 +54,67 @@ const Bet = (props) => {
         }
     }
 
+    //Function to handle close of edit modal
+    const closeEdit = () => {
+        setShowEditBet(false);
+    }
+
+
     return (
-        <Table className="bet">
-            <tbody>
-                <tr>
-                    {(bet.type === "Spread") ? 
-                        <td onClick={()=>toggleDetails(i)}><i className="arrow down" id={"arrow"+i} ></i> {bet.bet+" "+stringifyOddsAndPoints(bet.handicap) + " ("+stringifyOddsAndPoints(bet.odds)+")"}</td>
-                    : 
-                    (bet.type === "Total") ?
-                        <td onClick={()=>toggleDetails(i)}><i className="arrow down" id={"arrow"+i} ></i> {bet.bet+" "+bet.total + " ("+stringifyOddsAndPoints(bet.odds)+")"} </td>
-                    :
-                        <td onClick={()=>toggleDetails(i)}><i className="arrow down" id={"arrow"+i} ></i> {bet.bet + " ("+stringifyOddsAndPoints(bet.odds)+")"}</td>
-                    }
-                    <td className="odds">{bet.odds.american} <i onClick={()=>props.removeBets([bet.id])}>&times;</i></td> 
-                </tr>
-                <tr>
-                    <td colSpan={2}>{bet.type}</td>
-                </tr>
-                <tr className={"betDetails"+i}>
-                    <td  colSpan={2}>{bet.fixture}</td>
-                </tr>
-                <tr className={"betDetails"+i}>
-                    <td colSpan={2}>{formatTime(bet.time)}</td>
-                </tr>
-                {props.slipType === "Straight" ? 
+        <>
+            <Table className="bet">
+                <tbody>
                     <tr>
-                        <td colSpan={2}>
-                            <Form>
-                                <Form.Row>
-                                    <Form.Group as={Col}>
-                                        <Form.Control type="number" placeholder="Risk" value={risk} onChange={(e)=>setRisk(e.target.value)}/>
-                                    </Form.Group> 
-                                    <Form.Group as={Col}>
-                                        <Form.Control type="text"  tabIndex="-1" placeholder="Win" value={win} readOnly/>
-                                    </Form.Group> 
-                                </Form.Row>
-                            </Form>
-                        </td>   
+                        {(bet.type === "Spread") ? 
+                            <td onClick={()=>toggleDetails(i)}>
+                                <i className="arrow down" id={"arrow"+i} ></i> {bet.bet+" "+stringifyOddsAndPoints(bet.handicap) + " ("+stringifyOddsAndPoints(bet.odds)+")"}
+                                <input type="image" src={editIcon} onClick={()=>setShowEditBet(true)} />
+                            </td>
+                        : 
+                        (bet.type === "Total") ?
+                            <td onClick={()=>toggleDetails(i)}>
+                                <i className="arrow down" id={"arrow"+i} ></i> {bet.bet+" "+bet.total + " ("+stringifyOddsAndPoints(bet.odds)+")"}
+                                <input type="image" src={editIcon} onClick={()=>setShowEditBet(true)} />
+                            </td>
+                        :
+                            <td onClick={()=>toggleDetails(i)}>
+                                <i className="arrow down" id={"arrow"+i} ></i> {bet.bet + " ("+stringifyOddsAndPoints(bet.odds)+")"}
+                                <input type="image" src={editIcon} onClick={()=>setShowEditBet(true)} />
+                            </td>
+                        }
+                        <td className="odds">{bet.odds.american} <i onClick={()=>props.removeBets([bet.id])}>&times;</i></td> 
                     </tr>
-                    :
-                    <></>
-                }    
-            </tbody>
-        </Table>    
+                    <tr>
+                        <td colSpan={2}>{bet.type}</td>
+                    </tr>
+                    <tr className={"betDetails"+i}>
+                        <td  colSpan={2}>{bet.fixture}</td>
+                    </tr>
+                    <tr className={"betDetails"+i}>
+                        <td colSpan={2}>{formatTime(bet.time)}</td>
+                    </tr>
+                    {props.slipType === "Straight" ? 
+                        <tr>
+                            <td colSpan={2}>
+                                <Form>
+                                    <Form.Row>
+                                        <Form.Group as={Col}>
+                                            <Form.Control type="number" placeholder="Risk" value={risk} onChange={(e)=>setRisk(e.target.value)}/>
+                                        </Form.Group> 
+                                        <Form.Group as={Col}>
+                                            <Form.Control type="text"  tabIndex="-1" placeholder="Win" value={win} readOnly/>
+                                        </Form.Group> 
+                                    </Form.Row>
+                                </Form>
+                            </td>   
+                        </tr>
+                        :
+                        <></>
+                    }    
+                </tbody>
+            </Table>  
+            <EditBetModal  close={closeEdit} show={showEditBet} bet={bet} editBet={props.editBet}/>
+        </>  
     )
 }
 

@@ -25,6 +25,15 @@ const BetSlip = (props) => {
         bets = tmpBets;
     }
 
+    //edit bet
+    const editBet = (id, bet) => {
+        //find index
+        const index = bets.map(bet => bet.id).indexOf(id);
+        let tmpBets = bets;
+        tmpBets[index] = bet;
+        bets = tmpBets;
+    }
+
     //Function to format straight bets in records for db storage
     const formatStraightBet = (bet) =>{
         //create instance of bet model obj and add properties
@@ -174,7 +183,7 @@ const BetSlip = (props) => {
                 <Card.Body>
                     {bets.map((bet, i)=>{
                     return(
-                            <Bet key={bet.bet+bet.id} bet={bet} i={i} removeBets={props.removeBets} slipType={slipType} addWager={addWager}/>
+                            <Bet key={bet.bet+bet.id} bet={bet} i={i} removeBets={props.removeBets} slipType={slipType} addWager={addWager} editBet={editBet}/>
                         )
                     })}
                 </Card.Body>
