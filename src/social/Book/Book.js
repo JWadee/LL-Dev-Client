@@ -1,27 +1,47 @@
 import React, {useEffect, useState} from 'react'
-import Fixture from './Fixture';
-import {Table, Row, Col} from 'react-bootstrap';
-import BetSlip from './BetSlip/BetSlip';
-
+import organizeBook from '../../utils/organizeBook';
 import '../../css/global/fixtures.css';
+
+import {Row, Col} from 'react-bootstrap';
+import BetSlip from './BetSlip/BetSlip';
+import SportPrev from './SportPrev';
+
 const Book = () => {
-    const [book, setBook] = useState([]);
+    const [fixts, setfixts] = useState([]);
     const [bets, setBets] = useState([]);
+    const [sports, setSports] = useState([]);
+    const [leagues, setLeagues] = useState([]);
+    const [book, setBook] = useState([]);
 
     useEffect(()=>{
-        const fetchBook = async() =>{
+        const fetchfixts = async() =>{
             const response = await fetch('https://api.lineleaders.net/fixtures/getBook');
             const data = await response.json();
-            setBook(data);
+            setfixts(data);
+        }
+        const fetchSports = async () => {
+            const response = await fetch('https://api.lineleaders.net/sports/');
+            const data = await response.json();
+            setSports(data)
+        }
+        const fetchLeagues = async () => {
+            const response = await fetch('https://api.lineleaders.net/leagues/');
+            const data = await response.json();
+            setLeagues(data);
         }
 
-        fetchBook();
+        fetchLeagues();
+        fetchSports();
+        fetchfixts();
     },[])
 
-    //organize by league
+    //organize book
     useEffect(()=>{
-
-    },[])
+        if(fixts.length > 0 && leagues.length > 0 && sports.length > 0){
+            let orgBook = organizeBook(fixts, leagues, sports);
+            setBook(orgBook)
+        }
+    },[sports,leagues,fixts])
 
     //function to remove a single bet
     const removeBet = (id) => {
@@ -61,30 +81,18 @@ const Book = () => {
     }
 
     return (
-        <Row>
-            <Col md={8} sm={12}> 
-                <Table className="fixtureTable" responsive>
-                    <thead className="fixtHeader">
-                        <tr>
-                            <th className="timeHeader"></th>
-                            <th className="fixtCol">Fixture</th>
-                            <th className="lineCol">Spread</th>
-                            <th className="lineCol">Win</th>
-                            <th className="lineCol">Total</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {book.map(fixt=>{
-                            return <Fixture key={fixt.fixture_id} fixt={fixt} bets={bets} setBets={setBets} removeBet={removeBet}/>
-                        })}
-                    </tbody>  
-                </Table>
-
-            </Col>
-            <Col md={4} sm={12}>
-                <BetSlip bets={bets} removeBets={removeBets} />
-            </Col>
-        </Row>   
+        <>
+            <Row>
+                <Col md={8} sm={12}> 
+                    {book.map(sport=>{
+                        return(<SportPrev sport={sport} bets={bets} setBets={setBets} removeBet={removeBet}/>) 
+                    })}
+                </Col>
+                <Col md={4} sm={12}>
+                    <BetSlip bets={bets} removeBets={removeBets} />
+                </Col>
+            </Row>   
+        </>
     )
 }
 
