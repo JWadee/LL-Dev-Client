@@ -1,5 +1,6 @@
-import React from 'react';
-import {Table}from 'react-bootstrap';
+import React, { useState } from 'react';
+import { Fragment } from 'react';
+import {Table, Button}from 'react-bootstrap';
 import Fixture from './Fixture';
 
 const SportPrev = (props) => {
@@ -8,7 +9,7 @@ const SportPrev = (props) => {
             <h2>{props.sport.sport_name}</h2>
             {props.sport.leagues.map(league => {
                 return (
-                    <>  
+                    <Fragment key={league.league_key}>  
                         <h5>{league.league_short}</h5>
                         <Table className="fixtureTable" responsive>
                             <thead className="fixtHeader">
@@ -26,7 +27,7 @@ const SportPrev = (props) => {
                                 })}
                             </tbody>  
                         </Table>
-                    </>
+                    </Fragment>
                 )
             })}
 

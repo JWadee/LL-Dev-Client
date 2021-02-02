@@ -28,6 +28,8 @@ ReactDOM.render(
     redirect_uri={window.location.origin}
     audience={config.audience} 
     onRedirectCallback={onRedirectCallback}
+    useRefreshTokens={true}
+    cacheLocation="localstorage"
   >
     <Provider store={store}>
         <App />

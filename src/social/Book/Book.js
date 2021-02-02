@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react'
 import organizeBook from '../../utils/organizeBook';
 import '../../css/global/fixtures.css';
 
-import {Row, Col} from 'react-bootstrap';
+import {Row, Col, Navbar, Nav} from 'react-bootstrap';
 import BetSlip from './BetSlip/BetSlip';
 import SportPrev from './SportPrev';
 
@@ -81,11 +81,19 @@ const Book = () => {
     }
 
     return (
-        <>
+        <>  
+            {/* <Navbar bg="dark">
+                <Nav className="mr-auto">
+                    <Nav.Link href="#home">Basketball</Nav.Link>
+                    <Nav.Link href="#features">Football</Nav.Link>
+                    <Nav.Link href="#pricing">Soccer</Nav.Link>
+                    <Nav.Link href="#pricing">Baseball</Nav.Link>
+                </Nav>
+            </Navbar> */}
             <Row>
                 <Col md={8} sm={12}> 
                     {book.map(sport=>{
-                        return(<SportPrev sport={sport} bets={bets} setBets={setBets} removeBet={removeBet}/>) 
+                        return(<SportPrev key={sport.sport_id} sport={sport} bets={bets} setBets={setBets} removeBet={removeBet}/>) 
                     })}
                 </Col>
                 <Col md={4} sm={12}>
