@@ -18,7 +18,7 @@ const SettledBets = (props) => {
                 </tr>
             </thead>
             <tbody>
-                {props.settledBets.map(bet=>{
+                {props.settledBets.map((bet, i)=>{
                     if(bet.type === "Straight"){
                         const leg = bet.legs[0];
                         //calc win field
@@ -32,7 +32,7 @@ const SettledBets = (props) => {
                         }
 
                         return(
-                            <tr className={"bet"+bet.result}>
+                            <tr className={"bet"+bet.result} key={i}>
                                 <td>{bet.type}</td>
                                 <Leg leg={leg} />
                                 <td>{stringifyOddsAndPoints(bet.odds)}</td>

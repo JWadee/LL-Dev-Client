@@ -32,7 +32,7 @@ const BetSlip = (props) => {
         let betModel = {...model};
         betModel.type = slipType;
         betModel.wager = bet.wager;
-        betModel.odds = bet.odds.decimal;
+        betModel.odds = bet.odds;
         betModel.result = "";
         
         //create instance of leg obj 
@@ -144,8 +144,9 @@ const BetSlip = (props) => {
         const body = {
             bets: records
         }
+        console.log(bets)
 
-        const url ='https://api.lineleaders.net/bets/create';
+        const url ='https://api.lineleaders.net/bets/createContest';
         const options = {
             method:'POST',
             headers:{

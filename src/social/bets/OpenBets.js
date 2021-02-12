@@ -18,7 +18,7 @@ const OpenBets = (props) => {
                 </tr>
             </thead>
             <tbody>
-                {props.openBets.map(bet=>{
+                {props.openBets.map((bet, i)=>{
                     if(bet.type === "Straight"){
                         const leg = bet.legs[0];
                         //calc win field
@@ -32,7 +32,7 @@ const OpenBets = (props) => {
                         }
                         
                         return(
-                            <tr className={"openBet"}>
+                            <tr className={"openBet"} key={i}>
                                 <td>{bet.type}</td>
                                 <Leg leg={leg} />
                                 <td>{stringifyOddsAndPoints(bet.odds)}</td>
@@ -52,7 +52,7 @@ const OpenBets = (props) => {
 
 const mapStateToProps = (state) => {
     return {
-        openBets: state.contest.openBets
+        openBets: state.user.openBets
     }
   }
 

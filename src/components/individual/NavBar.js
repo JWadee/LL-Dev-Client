@@ -70,8 +70,14 @@ const NavBar = (props) => {
               <LinkContainer to="/book">
                 <Nav.Link>Book</Nav.Link>
               </LinkContainer>
+              <LinkContainer to="/lobby">
+                <Nav.Link>Lobby</Nav.Link>
+              </LinkContainer>
+              <LinkContainer to="/contests">
+                <Nav.Link>My Contests</Nav.Link>
+              </LinkContainer>
               <NavDropdown title="My Account">
-                <NavDropdown.Item disabled>Balance: ${props.balance}</NavDropdown.Item>
+                {/* <NavDropdown.Item disabled>Balance: ${props.balance}</NavDropdown.Item> */}
                 <LinkContainer to="/profile">
                   <NavDropdown.Item>Profile</NavDropdown.Item>
                 </LinkContainer>

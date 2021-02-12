@@ -26,7 +26,7 @@ const CreateContest = (props) => {
     const [disabled,setDisabled] = useState(true);
     const [sports, setSports] = useState([])
     const [sportIDs, setSportIDs] = useState([])
-    const [leagueIDs, setLeagueIDs] = useState([1, 2])
+    const [leagueIDs, setLeagueIDs] = useState([10046574, 10046575, 10046584])
     const [leaguesLabel, setLeaguesLabel] = useState('Click to Select');
     const [entry, setEntry] = useState(Number);
     const [prizepool, setPrizepool] = useState(Number);

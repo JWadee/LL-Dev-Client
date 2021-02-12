@@ -1,6 +1,6 @@
 import React from 'react';
 import {Table } from 'react-bootstrap';
-import convertOdds from '../../../../utils/convertOdds';
+import stringifyOddsAndPoints from '../../../../utils/stringifyOddsAndPoints';
 import Leg from './Leg';
 import '../../../../css/betsTable.css';
 import { connect } from 'react-redux';
@@ -18,17 +18,23 @@ const OpenBets = (props) => {
                 </tr>
             </thead>
             <tbody>
-                {props.openBets.map(bet=>{
+                {props.openBets.map((bet, i)=>{
                     if(bet.type === "Straight"){
                         const leg = bet.legs[0];
                         //calc win field
-                        let win = bet.odds - 1;
-                        win = (win * bet.wager).toFixed(2)
+                        let win;
+                        if(bet.odds > 0){
+                            let dec = bet.odds/100;
+                            win = parseFloat(bet.wager * dec).toFixed(2)
+                        }else{
+                            let dec = Math.abs(bet.odds)/100;
+                            win = parseFloat(bet.wager / dec).toFixed(2)
+                        }
                         return(
-                            <tr className={"openBet"}>
+                            <tr className={"openBet"} key={i}>
                                 <td>{bet.type}</td>
                                 <Leg leg={leg} />
-                                <td>{convertOdds(bet.odds)}</td>
+                                <td>{stringifyOddsAndPoints(bet.odds)}</td>
                                 <td>{"$"+parseFloat(bet.wager).toFixed(2)}</td>
                                 <td>{"$"+win}</td>
                             </tr>

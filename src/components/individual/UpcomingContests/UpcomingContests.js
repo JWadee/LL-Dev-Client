@@ -97,29 +97,35 @@ const OpenContests = (props) => {
                             <th className="hidden-md">Style</th>
                             <th>Entry Fee</th>
                             <th>Prizepool</th>
-                            <th className="hidden-md">Entries</th>
                             <th className="hidden-md">Bankroll</th>
                             <th>Start</th>
-                            <th className="hidden-md"></th>
                             <th></th>
                         </tr>
                     </thead>               
                     <tbody>   
-                        {contests.map((contest,i)=>{
-                            return(
-                                <tr key={contest.contestID}>
-                                    <td>{contest.name}</td>
-                                    <td className="hidden-md">{contest.contestType}</td>
-                                    <td>${contest.entry}</td>
-                                    <td>${contest.prizepool}</td>
-                                    <td className="hidden-md">Entries(need calculated)</td>
-                                    <td className="hidden-md">${contest.bankroll}</td>
-                                    <td id={"countdown"+i}></td>
-                                    <td className="hidden-md"><Button onClick={()=>handleOpenDetail(contest)}>Details</Button></td>
-                                    <td><Button onClick={()=>enterContest(contest.contestID)}>Enter</Button></td>
+                        {contests.length > 0 ?
+                            (
+                                contests.map((contest,i)=>{
+                                    return(
+                                        <tr key={contest.contestID}>
+                                            <td>{contest.name}</td>
+                                            <td className="hidden-md">{contest.contestType}</td>
+                                            <td>${contest.entry}</td>
+                                            <td>${contest.prizepool}</td>
+                                            <td className="hidden-md">${contest.bankroll}</td>
+                                            <td id={"countdown"+i}></td>
+                                            <td><Button onClick={()=>enterContest(contest.contestID)}>Enter</Button></td>
+                                        </tr>
+                                    )
+                                })
+                            )
+                                :
+                            (
+                                <tr>
+                                    <td colSpan="5">No Contests Available</td>
                                 </tr>
                             )
-                        })}
+                        }
                     </tbody>
                 </Table>            
             </Col> 

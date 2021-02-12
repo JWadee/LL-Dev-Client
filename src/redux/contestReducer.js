@@ -7,8 +7,7 @@ const initValues  = {
     bankroll: null,
     available: null,
     leagues: [],
-    upcomingFixts:[],
-    inplayFixts:[]
+    book:[]
 }
 
 const contestReducer = (state = initValues, action) =>{
@@ -37,20 +36,18 @@ const contestReducer = (state = initValues, action) =>{
             state =  {...state, available: action.available};
             break;
         }
-        case 'SET_LEAGUES': {
+        case 'SET_CONTEST_LEAGUES': {
             state = {...state, leagues: action.leagues}
         }
-        case 'SET_UPCOMING': {
-            state = {...state, upcomingFixts: action.upcoming}
-        }
-        case 'SET_INPLAY': {
-            state = {...state, inplayFixts: action.inplay}
+        case 'SET_BOOK': {
+            state = {...state, book: action.book}
         }
         case 'SET_LEADERBOARDS': {
             if(typeof action.leaderboards !== "undefined"){
                 state = {...state, leaderboards: action.leaderboards}
             }
         }
+
         default : break; 
     }
     return state;

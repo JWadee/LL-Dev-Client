@@ -4,7 +4,8 @@ const initValues  = {
     balance: null,
     permissions:  [],
     openBets: [],    
-    settledBets: []
+    settledBets: [],
+    contests: []
 }
 
 const userReducer = (state = initValues, action) =>{
@@ -31,6 +32,10 @@ const userReducer = (state = initValues, action) =>{
         }
         case 'SET_SETTLED_BETS': {
             state =  {...state, settledBets: action.bets};
+            break;
+        }        
+        case 'SET_CONTESTS': {
+            state =  {...state, contests: action.contests};
             break;
         }
         default : break;

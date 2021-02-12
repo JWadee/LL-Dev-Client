@@ -1,9 +1,11 @@
 import React, {useState, useEffect} from 'react';
 import {Spinner} from 'react-bootstrap';
+import { connect } from 'react-redux';
 //Components 
 import UpcomingContests from '../individual/UpcomingContests/UpcomingContests';
 
-const Lobby = () => {
+const Lobby = (props) => {
+    const [availContests, setAvailContests] = useState([]);
     const [contestRows, setContestRows] = useState([]);
     const [contests, setContests] = useState([]);
     const [display, setDisplay] = useState(false);
@@ -19,6 +21,31 @@ const Lobby = () => {
 
         fetchOpenContests();
     },[]);
+
+    //fetch user contests and set redux var
+    useEffect(()=>{
+        const fetchMyContests = async()=>{
+            const response = await fetch('https://api.lineleaders.net/contests/myContests?ID='+props.accountID);
+            const data = await response.json(); 
+            //set user contests redux variable 
+            props.setMyContests(data);
+        }
+
+        fetchMyContests();
+    }, [props.accountID]);
+
+    //check available contests to display 
+    useEffect(()=>{
+        let tmpAvail = [];
+        contests.forEach(cont => {
+            let exists = props.myContests.findIndex(myCont => myCont.intContestID == cont.contestID);
+            if(exists === -1){
+                tmpAvail.push(cont);
+            }
+        })
+
+        setAvailContests(tmpAvail);
+    },[contests, props.myContests])
 
     //Set display to true after 3 seconds
     setTimeout(function() {
@@ -76,10 +103,10 @@ const Lobby = () => {
 
 
 
-    if(contests.length > 0 && display===true){ 
+    if(display===true){ 
         return (
             <>
-                <UpcomingContests contests={contests}/>
+                <UpcomingContests contests={availContests}/>
             </>
         )
     }else{
@@ -90,4 +117,16 @@ const Lobby = () => {
 
 }
 
-export default Lobby
+const mapStateToProps = (state) => {
+    return {
+      myContests: state.user.contests,
+      accountID: state.user.ID
+    }
+  }
+  
+  const mapDispatchToProps = ( dispatch ) => {
+    return{
+      setMyContests: contests => { dispatch({type: 'SET_CONTESTS', contests: contests })},      
+    }
+  }
+export default connect(mapStateToProps, mapDispatchToProps)(Lobby);

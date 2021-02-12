@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import {Row} from 'react-bootstrap';
+import {Row, Navbar, Nav} from 'react-bootstrap';
 
 //Components
 import CreateContest from '../forms/createContest/CreateContest';
@@ -13,9 +13,23 @@ const AdminPage = () => {
     }
 
     return (
-        <Row>   
-            <NeedResultsPage />
-        </Row>
+        <>
+            <Row>
+                <Navbar>
+                    <Nav>
+                        <Nav.Item>
+                            <Nav.Link onClick={()=>setComponent(<NeedResultsPage />)}>Enter Results</Nav.Link>
+                       </Nav.Item>
+                        <Nav.Item>
+                            <Nav.Link onClick={()=>setComponent(<CreateContest />)}>Create Contest</Nav.Link>
+                        </Nav.Item>
+                    </Nav>
+                </Navbar>
+            </Row>
+            <Row>   
+                {component}        
+            </Row>
+        </>
     )
 
 }

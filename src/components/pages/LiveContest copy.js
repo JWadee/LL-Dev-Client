@@ -8,12 +8,12 @@ import { useRouteMatch } from "react-router-dom";
 import { connect } from 'react-redux';
 import isEmpty from '../../utils/isEmpty';
 import formatCurrency from '../../utils/formatCurrency';
-import organizeBook from '../../utils/organizeBook';
+
 const LiveContest = (props) => {
     const match = useRouteMatch();
     const [display, setDisplay] = useState(false);
     const [activeTab, setActiveTab] = useState('book');
-    const [tmp, setTmp] = useState([]);
+
     //Function to run on render and fetch contest + contestLeagues + contestBets
     useEffect(()=>{
         const fetchContest = async () => {
@@ -62,41 +62,75 @@ const LiveContest = (props) => {
         }
     }
 
-    useEffect(()=>{
-        const fetchFixtures = async() => {
-            let leagueIds = props.leagues.map(league=>{
-                return league.intLeagueID
+    // function to separate into upcoming and inplay fixtures by leagues
+    const organizeFixtures = (leagueFixts) => {
+        let upcoming = [];
+        let inplay = [];
+
+        leagueFixts.forEach(league=>{
+            //add new league fixts objects to upcoming and inplay arrays
+            upcoming.push({
+                leagueID: league.leagueID,
+                fixtures: []
             });
 
-            if(leagueIds.length > 0 & props.sports.length > 0){  
-                //api parameters to get fixtures
-                let body = {
-                    leagueIDs: leagueIds,
-                    start:props.contest.dtmStart,
-                    end: props.contest.dtmEnd
-                }
-                const url ='https://api.lineleaders.net/fixtures/byLeagues/withTimeFrame'
-                const options = {
-                    method:'POST',
-                    headers:{
-                        'Content-Type': 'application/json;charset=UTF-8'
-                    }, 
-                    body: JSON.stringify(body)
-                }
-                //call api
-                const response = await fetch(url, options);
-                const fixts = await response.json();
-                //organize fixtures and set upcoming + inplay
-                let book = organizeBook(fixts, props.leagues, props.sports);
-                props.setBook(book);
-                setDisplay(true);
-            }
-        }
+            inplay.push({
+                leagueID: league.leagueID,
+                fixtures: []
+            })
 
+            //sort league fixtures into upcoming and inplay
+            league.fixtures.forEach(fixt=>{
+                //upcoming
+                if(fixt.time_status == 0){
+                    let upcIndex = upcoming.findIndex(lf=> parseInt(lf.leagueID) === parseInt(league.leagueID));
+                    upcoming[upcIndex].fixtures.push(fixt)
+                //inplay
+                }else{
+                    let inpIndex = inplay.findIndex(lf=> parseInt(lf.leagueID) === parseInt(league.leagueID));
+                    inplay[inpIndex].fixtures.push(fixt)
+                } 
+            })
+        })
+        //set upcoming and inplay
+        props.setUpcoming(upcoming);
+        props.setInplay(inplay);
+        setDisplay(true);
+    }
+
+    //run whenever leagues or contest is set, if contest is not empty fetch fixtures by league w/ time frame
+    useEffect(()=>{
         if(!isEmpty(props.contest)){
+            const fetchFixtures = async() => {
+                let leagueIds = props.leagues.map(league=>{
+                    return league.intLeagueID
+                });
+
+                if(leagueIds.length > 0){  
+                    //api parameters to get fixtures
+                    let body = {
+                        leagueIDs: leagueIds,
+                        start:props.contest.dtmStart,
+                        end: props.contest.dtmEnd
+                    }
+                    const url ='https://api.lineleaders.net/fixtures/byLeagues/withTimeFrame'
+                    const options = {
+                        method:'POST',
+                        headers:{
+                            'Content-Type': 'application/json;charset=UTF-8'
+                        }, 
+                        body: JSON.stringify(body)
+                    }
+                    //call api
+                    const response = await fetch(url, options);
+                    const leagueFixts = await response.json();
+                    //organize fixtures and set upcoming + inplay
+                    organizeFixtures(leagueFixts);
+                }
+            }
             fetchFixtures();        
         }
-    },[props.leagues, props.contest, props.sports])
+    },[props.leagues, props.contest])
 
 
     //Run on settled bets change, calculate bankroll and update store
@@ -106,14 +140,8 @@ const LiveContest = (props) => {
         props.settledBets.forEach(bet=>{
             //update bankroll
             if(bet.result === "W" ){
-                let win;
-                if(bet.odds > 0){
-                    let dec = bet.odds/100;
-                    win = parseFloat(bet.wager * dec).toFixed(2)
-                }else{
-                    let dec = Math.abs(bet.odds)/100;
-                    win = parseFloat(bet.wager / dec).toFixed(2)
-                };
+                let win = parseFloat(bet.odds - 1);
+                win = (win * parseFloat(bet.wager));
                 bankroll = bankroll +  win;
             }else if(bet.result === "L" ){
                 bankroll = bankroll - parseFloat(bet.wager);
@@ -155,7 +183,7 @@ const LiveContest = (props) => {
                 {/* Display when screens are large */}
                 <Tabs fill activeKey={activeTab} onSelect={(k)=>setActiveTab(k)} id="contestsTab" className="hidden-md">
                     <Tab eventKey="book" title="BOOK">
-                        <Book book={props.book} /> 
+                        <Book leagues={props.leagues} inplay={props.inplayFixts} upcoming={props.upcomingFixts} /> 
                     </Tab>
                     <Tab eventKey="open" title={"OPEN ("+props.openBets.length+")"}>
                         <OpenBets />
@@ -188,8 +216,8 @@ const mapStateToProps = (state) => {
       openBets: state.contest.openBets, 
       settledBets: state.contest.settledBets,
       leagues: state.contest.leagues,
-      book: state.contest.book,
-      sports: state.application.sports
+      upcomingFixts: state.contest.upcomingFixts,
+      inplayFixts: state.contest.inplayFixts
     }
   }
   
@@ -201,11 +229,10 @@ const mapStateToProps = (state) => {
       setBankroll: bankroll => { dispatch({type: 'SET_BANKROLL', bankroll: bankroll })},
       setOpenBets: bets => { dispatch({type: 'SET_OPEN_BETS', bets: bets })},      
       setSettledBets: bets => { dispatch({type: 'SET_SETTLED_BETS', bets: bets })},
-      setLeagues: leagues => { dispatch({type: 'SET_CONTEST_LEAGUES', leagues:leagues})},
+      setLeagues: leagues => { dispatch({type: 'SET_LEAGUES', leagues:leagues})},
       setUpcoming: upcoming => {dispatch({type: 'SET_UPCOMING', upcoming:upcoming})},
       setInplay: inplay => {dispatch({type: 'SET_INPLAY', inplay:inplay})},
-      setLeaderboards: leaderboards => {dispatch({type: 'SET_LEADERBOARDS', leaderboards:leaderboards})},
-      setBook: book => {dispatch({type: 'SET_BOOK', book:book})}
+      setLeaderboards: leaderboards => {dispatch({type: 'SET_LEADERBOARDS', leaderboards:leaderboards})}
     }
   }
 
