@@ -1,6 +1,7 @@
 import React from 'react'
 import formatTime from '../../../../utils/formatTime';
 import stringifyOddsAndPoints from '../../../../utils/stringifyOddsAndPoints';
+
 const Leg = (props) => {
     let leg = props.leg
     let time = formatTime(leg.fixture.time)
@@ -18,7 +19,12 @@ const Leg = (props) => {
             </td>
         )
     }else if(leg.line.type === "Spread"){
-
+        let line;
+        if(leg.line.line > 0){
+            line = leg.line.line;
+        }else{
+            line = leg.line.line;
+        }
         return (
             <td>
                 <b>{leg.line.team.name + " " + stringifyOddsAndPoints(leg.line.line)}</b>
@@ -38,6 +44,8 @@ const Leg = (props) => {
     return(
         <></>
     )
+    
+    
 }
 
 export default Leg

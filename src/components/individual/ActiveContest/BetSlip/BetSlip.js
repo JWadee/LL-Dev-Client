@@ -53,7 +53,7 @@ const BetSlip = (props) => {
             leg.line = spread;
             leg.odds = bet.odds.decimal;
             leg.result ="";
-        }else if(legType === "3-Way Moneyline"){
+        }else if(legType === "Moneyline"){
             //create instance of ML line object
             let ml = {...ML}; 
             ml.team = {...ml.team}
@@ -186,7 +186,7 @@ const BetSlip = (props) => {
                 <Card.Body>
                     {bets.map((bet, i)=>{
                     return(
-                            <Bet key={i} bet={bet} i={i} removeBets={props.removeBets} slipType={slipType} addWager={addWager}/>
+                            <Bet key={bet.bet+bet.id} bet={bet} i={i} removeBets={props.removeBets} slipType={slipType} addWager={addWager}/>
                         )
                     })}
                 </Card.Body>
