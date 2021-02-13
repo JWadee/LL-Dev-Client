@@ -107,12 +107,16 @@ const LiveContest = (props) => {
             //update bankroll
             if(bet.result === "W" ){
                 let win;
-                if(bet.odds > 0){
-                    let dec = bet.odds/100;
-                    win = parseFloat(bet.wager * dec).toFixed(2)
-                }else{
-                    let dec = Math.abs(bet.odds)/100;
-                    win = parseFloat(bet.wager / dec).toFixed(2)
+                let odds = parseFloat(bet.odds);
+                let wager = parseFloat(bet.wager);
+
+                if(odds > 0){
+                    let dec = odds/100;
+                    win = parseFloat(wager * dec)
+                }
+                else{
+                    let dec = Math.abs(odds)/100;
+                    win = parseFloat(parseFloat(wager) / dec)
                 };
                 bankroll = bankroll +  win;
             }else if(bet.result === "L" ){
