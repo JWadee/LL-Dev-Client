@@ -13,7 +13,7 @@ const LiveContest = (props) => {
     const match = useRouteMatch();
     const [display, setDisplay] = useState(false);
     const [activeTab, setActiveTab] = useState('book');
-    const [tmp, setTmp] = useState([]);
+
     //Function to run on render and fetch contest + contestLeagues + contestBets
     useEffect(()=>{
         const fetchContest = async () => {
@@ -50,17 +50,24 @@ const LiveContest = (props) => {
         
         fetchContest();
         fetchLeagues();
-        fetch_leaderboards();
     },[])
     
-    //Function to fetch leaderboards
-    const fetch_leaderboards = async() => {
-        const response = await fetch('https://api.lineleaders.net/contests/leaderboards/?id='+match.params.contestid);
-        let leaderboards = await response.json();
-        if(leaderboards.length > 0){
-            props.setLeaderboards(leaderboards)
+    //run whenever contest is set, fetch leaderboard
+    useEffect(()=>{
+        const fetch_leaderboards = async() => {
+            const response = await fetch('https://api.lineleaders.net/contests/leaderboards/?id='+match.params.contestid+"&contestTypeID="+props.contest.intContestTypeID+"&prizepool="+props.contest.decPrizePool);
+            let leaderboards = await response.json();
+            if(leaderboards.length > 0){
+                props.setLeaderboards(leaderboards)
+            }
         }
-    }
+
+        if(!isEmpty(props.contest)){
+            fetch_leaderboards();
+        }
+    },[props.contest])
+    //Function to fetch leaderboards
+
 
     useEffect(()=>{
         const fetchFixtures = async() => {
@@ -94,7 +101,8 @@ const LiveContest = (props) => {
         }
 
         if(!isEmpty(props.contest)){
-            fetchFixtures();        
+            fetchFixtures();    
+            // fetch_leaderboards(props.contest.)    
         }
     },[props.leagues, props.contest, props.sports])
 
@@ -159,7 +167,11 @@ const LiveContest = (props) => {
                 {/* Display when screens are large */}
                 <Tabs fill activeKey={activeTab} onSelect={(k)=>setActiveTab(k)} id="contestsTab" className="hidden-md">
                     <Tab eventKey="book" title="BOOK">
-                        <Book book={props.book} /> 
+                        {typeof props.book != "undefined" ?
+                            (<Book book={props.book} /> )
+                            :
+                            (<></>)
+                        }
                     </Tab>
                     <Tab eventKey="open" title={"OPEN ("+props.openBets.length+")"}>
                         <OpenBets />
@@ -168,7 +180,7 @@ const LiveContest = (props) => {
                         <SettledBets />
                     </Tab>
                     <Tab eventKey="leaderboard" title="LEADERBOARD">
-                        <Leaderboard />
+                        <Leaderboard leaderboards={props.leaderboards}/>
                     </Tab>
                 </Tabs>
                 

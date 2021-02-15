@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 //Components 
 import MyLiveContests from '../individual/MyContests/MyLiveContests';
 import MyUpcomingContests from '../individual/MyContests/MyUpcomingContests';
-import MyHistoryContests from '../individual/MyContests/MyHistoryContests';
+import MyHistoryContests from '../individual/MyContests/history/MyHistoryContests';
 
 const ContestsPage = (props) => {
     const [contests, setContests] = useState([]);

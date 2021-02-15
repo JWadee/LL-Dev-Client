@@ -1,11 +1,11 @@
 import React from 'react'
-import {Table} from 'react-bootstrap';
+import {Table, Alert} from 'react-bootstrap';
 import { connect } from 'react-redux';
 import formatCurrency from '../../../utils/formatCurrency';
 import '../../../css/global/tables.css'
 
 const Leaderboard = (props) => {
-    console.log(props)
+    console.log(props.leaderboards)
     return (
         <Table responsive>
             <thead>
@@ -14,6 +14,7 @@ const Leaderboard = (props) => {
                     <th>Username</th>
                     <th>Bankroll</th>
                     <th>W/L</th>
+                    <th>Prizes</th>
                 </tr>
             </thead>
             <tbody>
@@ -31,6 +32,12 @@ const Leaderboard = (props) => {
                             <td>{contestant.email}</td>
                             <td>{bankroll}</td>
                             <td>{record}</td>
+                            {parseFloat(contestant.winnings) > 0 ?
+                                (<td><Alert variant="success">{"$"+contestant.winnings}</Alert></td>)
+                                :
+                                (<td />)
+                            }
+                            
                         </tr>
                     )
                 })}
@@ -41,10 +48,6 @@ const Leaderboard = (props) => {
 }
 
 
-const mapStateToProps = (state) => {
-    return {
-      leaderboards: state.contest.leaderboards,
-    }
-}
 
-export default connect(mapStateToProps)(Leaderboard);
+
+export default Leaderboard;
