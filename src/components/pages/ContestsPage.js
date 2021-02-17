@@ -60,7 +60,7 @@ const ContestsPage = (props) => {
         }
     },[contests])
 
-    if(contests.length > 0 && display===true){ 
+    if(display===true){ 
 
         return (
             <>
