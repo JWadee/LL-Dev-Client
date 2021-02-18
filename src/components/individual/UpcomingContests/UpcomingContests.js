@@ -1,8 +1,9 @@
 import React, {useState, useEffect} from 'react';
 import {Row, Col, Table, Button} from 'react-bootstrap';
 import { connect } from 'react-redux';
-import ContestDetails from './ContestDetails';
 import updateStartCountdown from '../../../utils/startCountdown';
+import ConfirmationModal from '../../shared/ConfirmationModal';
+import { useHistory } from "react-router-dom";
 
 /*  Contest Object Structure
         {
@@ -32,13 +33,17 @@ import updateStartCountdown from '../../../utils/startCountdown';
 
 const OpenContests = (props) => {
     const contests = props.contests;
-    const [expandedContest, setExpandedContest] = useState({});
-    const [showDetail, setShowDetail] = useState(false);
-    const handleClose = () => setShowDetail(false);
-    const handleShow = () => setShowDetail(true);
+    const [contestID, setContestID] = useState();
+    const [showConfirm, setShowConfirm] = useState(false);
+    const handleClose = () => {
+        setShowConfirm(false)
+        setContestID()
+    };
+    const history = useHistory();
+
 
     //Enter contest 
-    const enterContest = async (contestID) => {
+    const enterContest = async () => {
         const body = {
             contestID: contestID,
             accountID: props.accountID
@@ -58,6 +63,9 @@ const OpenContests = (props) => {
         fetch(url, opts)
         .then(response=> {
             console.log(response.json())
+            setShowConfirm(false);
+            history.push("/contests");
+
         })
         .catch(err=>{
             console.log(err)
@@ -80,11 +88,11 @@ const OpenContests = (props) => {
         };
     });
 
-    //Handle open detail
-    const handleOpenDetail = async (contest) => {
-        await setExpandedContest(contest)
-        setShowDetail(true)
+    const handleEnter = (contestID) => {
+        setContestID(contestID);
+        setShowConfirm(true);
     }
+
 
     return (
         <Row>
@@ -114,7 +122,7 @@ const OpenContests = (props) => {
                                             <td>${contest.prizepool}</td>
                                             <td className="hidden-md">${contest.bankroll}</td>
                                             <td id={"countdown"+i}></td>
-                                            <td><Button onClick={()=>enterContest(contest.contestID)}>Enter</Button></td>
+                                            <td><Button onClick={()=>handleEnter(contest.contestID)}>Enter</Button></td>
                                         </tr>
                                     )
                                 })
@@ -129,7 +137,8 @@ const OpenContests = (props) => {
                     </tbody>
                 </Table>            
             </Col> 
-            <ContestDetails contest={expandedContest} show={showDetail} onHide={handleClose}/> 
+            <ConfirmationModal close={handleClose} show={showConfirm} action={()=>enterContest(contestID)} buttonText="Enter" message={"Enter Contest?"}/>
+
         </Row>     
     )
 }
