@@ -4,12 +4,13 @@ import stringifyOddsAndPoints from '../../../../utils/stringifyOddsAndPoints';
 import Leg from './Leg';
 import '../../../../css/betsTable.css';
 import { connect } from 'react-redux';
-
+import formatTime from '../../../../utils/formatTime';
 const OpenBets = (props) => {    
     return (
         <Table responsive>
             <thead>
                 <tr>
+                    <th>Date Placed</th>
                     <th>Type</th>
                     <th>Line(s)</th>
                     <th>Odds</th>
@@ -19,6 +20,8 @@ const OpenBets = (props) => {
             </thead>
             <tbody>
                 {props.openBets.map((bet, i)=>{
+                    var dtm = new Date(parseInt(bet.timestamp));
+                    let timestamp = dtm.toLocaleString([], {dateStyle: 'short', timeStyle:'short'});
                     if(bet.type === "Straight"){
                         const leg = bet.legs[0];
                         //calc win field
@@ -32,6 +35,7 @@ const OpenBets = (props) => {
                         }
                         return(
                             <tr className={"openBet"} key={i}>
+                                <td>{timestamp}</td>
                                 <td>{bet.type}</td>
                                 <Leg leg={leg} />
                                 <td>{stringifyOddsAndPoints(bet.odds)}</td>

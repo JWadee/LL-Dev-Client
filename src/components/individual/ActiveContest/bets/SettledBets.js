@@ -10,6 +10,7 @@ const SettledBets = (props) => {
         <Table responsive>
             <thead>
                 <tr>
+                    <th>Date Placed</th>
                     <th>Type</th>
                     <th>Line(s)</th>
                     <th>Odds</th>
@@ -19,6 +20,8 @@ const SettledBets = (props) => {
             </thead>
             <tbody>
                 {props.settledBets.map((bet,i)=>{
+                    var dtm = new Date(parseInt(bet.timestamp));
+                    let timestamp = dtm.toLocaleString([], {dateStyle: 'short', timeStyle:'short'});
                     if(bet.type === "Straight"){
                         const leg = bet.legs[0];
                         //calc win field
@@ -32,6 +35,7 @@ const SettledBets = (props) => {
                         }
                         return(
                             <tr className={"bet"+bet.result} key={i}>
+                                <td>{timestamp}</td>
                                 <td>{bet.type}</td>
                                 <Leg leg={leg} />
                                 <td>{stringifyOddsAndPoints(bet.odds)}</td>
