@@ -1,7 +1,6 @@
-import React, {useEffect, useState} from 'react'
-import organizeBook from '../../../../utils/organizeBook';
+import React, {useState} from 'react'
 import '../../../../css/global/fixtures.css';
-import {Row, Col, Navbar, Nav} from 'react-bootstrap';
+import {Row, Col} from 'react-bootstrap';
 import BetSlip from '../BetSlip/BetSlip';
 import SportPrev from '../../../../social/Book/SportPrev';
 
