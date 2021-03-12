@@ -9,10 +9,13 @@ import { connect } from 'react-redux';
 import isEmpty from '../../utils/isEmpty';
 import formatCurrency from '../../utils/formatCurrency';
 import organizeUpcomingBook from '../../utils/organizeUpcomingBook';
+const _ = require('lodash');
+
 const LiveContest = (props) => {
     const match = useRouteMatch();
     const [display, setDisplay] = useState(false);
     const [activeTab, setActiveTab] = useState('book');
+
 
     //Function to run on render and fetch contest + contestLeagues + contestBets
     useEffect(()=>{
@@ -91,24 +94,38 @@ const LiveContest = (props) => {
             const fixts = await response.json();
             //organize fixtures and set upcoming + inplay
             let book = organizeUpcomingBook(fixts, props.leagues, props.sports);
-            props.setBook(book);
-            setDisplay(true);
+            if(_.isEqual(props.book, book) === false){
+                props.setBook(book);    
+            }
         }
     }
 
-    //Get Book initially
+    //clear redux store on unmount
     useEffect(()=>{
-        if(!isEmpty(props.contest)){
-            fetchFixtures();    
+        return()=>{
+            props.setContest({})
         }
-    },[props.leagues, props.contest, props.sports])
-    
-    //check book once a minute and remove live games
-    // setInterval(()=>{
-    //     if(!isEmpty(props.contest)){
-    //         fetchFixtures();    
-    //     }
-    // }, 60000)
+    },[])
+
+    //Get Book 
+    useEffect(() => {
+        //run initially
+        if(!isEmpty(props.contest) && props.contest != undefined){
+            fetchFixtures();   
+            setDisplay(true); 
+        }
+
+        //run once a minute
+        const timerId = setInterval(()=>{
+            if(!isEmpty(props.contest)){
+                fetchFixtures();    
+            }
+        }, 60000);
+
+        return () => {
+          clearInterval(timerId);
+        };       
+    }, [props.contest]);
 
     //Run on settled bets change, calculate bankroll and update store
     useEffect(()=>{
@@ -182,7 +199,7 @@ const LiveContest = (props) => {
                         <OpenBets />
                     </Tab>
                     <Tab eventKey="settled" title="SETTLED">
-                        <SettledBets />
+                        <SettledBets settledBets={props.settledBets}/>
                     </Tab>
                     <Tab eventKey="leaderboard" title="LEADERBOARD">
                         <Leaderboard leaderboards={props.leaderboards}/>

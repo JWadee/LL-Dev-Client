@@ -1,3 +1,7 @@
 tr{
     text-align: left;
 }
+
+.clickable:hover,.clickable:active{
+    background-color: lightgrey;
+}

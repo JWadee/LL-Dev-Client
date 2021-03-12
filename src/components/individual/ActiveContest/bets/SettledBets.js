@@ -5,7 +5,8 @@ import Leg from './Leg';
 import '../../../../css/betsTable.css';
 import { connect } from 'react-redux';
 
-const SettledBets = (props) => {    
+const SettledBets = (props) => {  
+    console.log(props)  
     return (
         <Table responsive>
             <thead>
@@ -54,11 +55,4 @@ const SettledBets = (props) => {
     )
 }
 
-
-const mapStateToProps = (state) => {
-    return {
-        settledBets: state.contest.settledBets
-    }
-  }
-
-  export default connect(mapStateToProps)(SettledBets);
+export default SettledBets;
