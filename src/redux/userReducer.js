@@ -5,7 +5,8 @@ const initValues  = {
     permissions:  [],
     openBets: [],    
     settledBets: [],
-    contests: []
+    contests: [],
+    posts: []
 }
 
 const userReducer = (state = initValues, action) =>{
@@ -36,6 +37,10 @@ const userReducer = (state = initValues, action) =>{
         }        
         case 'SET_CONTESTS': {
             state =  {...state, contests: action.contests};
+            break;
+        }
+        case 'SET_POSTS': {
+            state =  {...state, posts: action.posts};
             break;
         }
         default : break;

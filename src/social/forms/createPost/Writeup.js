@@ -29,7 +29,6 @@ const Writeup = (props) => {
         
     return (
         <>  
-            <h2>Write-up</h2>
             {!isEmpty(bet) ? 
                 <Table> 
                     <thead> 
@@ -63,7 +62,7 @@ const Writeup = (props) => {
                         <Button onClick={()=> props.prevStep()}>Back</Button>
                     </Col>
                     <Col>
-                        <Button onClick={()=> alert("posted")}>Post</Button>
+                        <Button onClick={()=> props.submitPost()}>Post</Button>
                     </Col>
                 </Form.Group>  
             </Form>

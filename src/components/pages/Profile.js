@@ -5,11 +5,10 @@ import { connect } from 'react-redux';
 import OpenBets from '../../social/bets/OpenBets';
 import SettledBets from '../../social/bets/SettledBets';
 import MyPosts from '../../social/MyPosts';
-import CreatePost from '../../social/forms/createPost/CreatePost';
 import CPModal from "../../social/forms/createPost/CPModal";
 
 const Profile = (props) => {
-  const { loading, user } = useAuth0();
+  const {user} = useAuth0();
   const [record, setRecord] = useState(String);
   const [PL, setPL] = useState();
   const [activeTab, setActiveTab] = useState('posts');
@@ -76,7 +75,13 @@ const Profile = (props) => {
       props.setSettledBets(settled);
     }
 
+    const fetchPosts = async ()=>{
+      const response = await fetch('https://api.lineleaders.net/posts/byAccount?ID='+props.user_id);
+      const posts = await response.json();
+      props.setPosts(posts);
+    }
     fetchBets();
+    fetchPosts();
   },[props.user_id])
 
   //Function to handle cancellation of creating a post
@@ -111,7 +116,7 @@ const Profile = (props) => {
       {/* Display when screens are large */}
       <Tabs fill activeKey={activeTab} onSelect={(k)=>setActiveTab(k)} id="contestsTab" className="hidden-md">
           <Tab eventKey="posts" title="Posts">
-             <MyPosts />
+              <MyPosts posts={props.posts} user={user}/>
           </Tab>
           <Tab eventKey="open" title={"Open ("+props.openBets.length+")"}>
               <OpenBets />
@@ -120,7 +125,7 @@ const Profile = (props) => {
               <SettledBets />
           </Tab>
       </Tabs>   
-      <CPModal  close={handleCancellation} show={showCreatePost} openBets= {props.openBets}/>
+      <CPModal  close={handleCancellation} show={showCreatePost} openBets= {props.openBets} userid={props.user_id} />
     </>
   );
 };
@@ -129,7 +134,8 @@ const mapStateToProps = (state) => {
   return {
     user_id: state.user.ID,
     openBets: state.user.openBets,
-    settledBets: state.user.settledBets
+    settledBets: state.user.settledBets,
+    posts: state.user.posts
   }
 }
 
@@ -137,6 +143,7 @@ const mapDispatchToProps = ( dispatch ) => {
   return{
     setOpenBets: bets => { dispatch({type: 'SET_OPEN_BETS', bets: bets })},      
     setSettledBets: bets => { dispatch({type: 'SET_SETTLED_BETS', bets: bets })},
+    setPosts:  posts => { dispatch({type: 'SET_POSTS', posts: posts })}
   }
 }
 

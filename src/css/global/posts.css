@@ -1,0 +1,21 @@
+.post{
+    border-top: 0.5px solid lightblue;
+    text-align: left;
+    padding: 10px;
+    font-size: small;
+}
+
+.post-bet p{
+    margin:0;
+    border-right: 0.5px solid lightblue;     
+}
+
+.post-bet{
+    margin-right: 0px;
+    width: 1000px;
+}
+
+.writeup{
+    text-align: left;
+    white-space: pre-wrap;
+}
