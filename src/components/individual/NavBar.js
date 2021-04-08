@@ -1,10 +1,12 @@
-import React, {useEffect} from "react";
+import React, { useEffect } from "react";
 import { useAuth0 } from "../../react-auth0-spa";
-import {Navbar, Nav, NavDropdown, Image } from 'react-bootstrap';
+import { Navbar, Nav, NavDropdown, Image, Form, Button } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 import { connect } from 'react-redux';
 import logo from '../../images/logo.PNG';
-
+import write from '../../images/icons/sm-write.svg';
+import search from '../../images/icons/search.svg'
+import '../../css/navs.css'
 //components 
 import AccessControl from './AccessControl';
 
@@ -14,54 +16,55 @@ const NavBar = (props) => {
   /* Runs on initial mount
   *  Calls fetchPermissions + fetchDetails then updates redux store  
   */
-  useEffect( () => {
-      if(isAuthenticated){
-      let permissions =[];
+  useEffect(() => {
+    if (isAuthenticated) {
+      let permissions = [];
 
-      async function fetchPermissions(){
-          try {
+      async function fetchPermissions() {
+        try {
           const token = await getTokenSilently();
           const response = await fetch("https://api.lineleaders.net/accounts/permissions", {
-          headers: {
+            headers: {
               Authorization: `Bearer ${token}`
-          }
+            }
           });
-          
+
           permissions = await response.json();
           props.setPermissions(permissions);
-          } catch (error) {
+        } catch (error) {
           console.error(error);
-          }
+        }
       }
 
-      async function fetchDetails(){
-          try {
-            const token = await getTokenSilently();
-            const response = await fetch("https://api.lineleaders.net/accounts/details", {
+      async function fetchDetails() {
+        try {
+          const token = await getTokenSilently();
+          const response = await fetch("https://api.lineleaders.net/accounts/details", {
             headers: {
-                Authorization: `Bearer ${token}`
+              Authorization: `Bearer ${token}`
             }
-            });
-          
-            let data = await response.json();
-            props.setUserID(data.intAccountID);
-          } catch (error) {
-            console.error(error);
-          }
+          });
+
+          let data = await response.json();
+          props.setUserID(data.intAccountID);
+        } catch (error) {
+          console.error(error);
+        }
       }
       fetchPermissions();
       fetchDetails();
-      }
-  },[])
-  
+    }
+  }, [])
+
   return (
-    <Navbar className="main-nav" expand="md" sticky="top">
-      <Navbar.Brand>
-        <Image  src={logo} rounded width="100%" height="auto"/>
-      </Navbar.Brand> 
+    <Navbar className="main-nav" collapseOnSelect variant="dark" bg="dark" expand="lg" sticky="top">
       <Navbar.Toggle />
+      <Navbar.Brand>
+        {/* <Image src={logo} rounded width="100%" height="auto" /> */}
+        <strong>LineLeaders</strong>
+      </Navbar.Brand>
       <Navbar.Collapse>
-        <Nav className="mr-auto">
+        <Nav className="mr-auto links">
           {/* Show regardless of login state */}
 
           {/* Show when logged in */}
@@ -91,33 +94,38 @@ const NavBar = (props) => {
               </NavDropdown>
             </>
           )}
-  
-          {/* Show if not logged in */}
-          {!isAuthenticated && (
-            <Nav.Link onClick={() => loginWithRedirect({})}>Log in</Nav.Link>
-          )}
         </Nav>
       </Navbar.Collapse>
+      {/* Show if not logged in */}
+      {!isAuthenticated && (
+        <Nav.Link onClick={() => loginWithRedirect({})}>Log in</Nav.Link>
+      )}
+      {/* <Nav className="d-flex flex-row order-2 order-lg-3 icons">
+          <Nav.Item className="icon" onClick={() => alert("write")}><Image src={write} width="24" height="auto" /></Nav.Item>
+          <Nav.Item className="icon" onClick={() => alert("search")}><Image src={search} width="28" height="auto" /> </Nav.Item>
+      </Nav> */}
+      
+
     </Navbar>
   );
 };
 
 const mapStateToProps = (state) => {
-    return {
-      permissions: state.user.permissions,
-      ID: state.user.ID,
-      username: state.user.username,
-      balance: state.user.balance
-    }
+  return {
+    permissions: state.user.permissions,
+    ID: state.user.ID,
+    username: state.user.username,
+    balance: state.user.balance
   }
-  
-  const mapDispatchToProps = ( dispatch ) => {
-    return{
-      setPermissions: (permissions) => { dispatch({type: 'SET_PERMISSIONS', permissions: permissions}) },
-      setUserID: (ID) => { dispatch({type: 'SET_USER_ID', ID: ID})},
-      setUsername: (username) => { dispatch({type: 'SET_USER_USERNAME', username: username})},
-      setBalance: (balance) => { dispatch({type: 'SET_USER_BALANCE', balance: balance})}
-    }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    setPermissions: (permissions) => { dispatch({ type: 'SET_PERMISSIONS', permissions: permissions }) },
+    setUserID: (ID) => { dispatch({ type: 'SET_USER_ID', ID: ID }) },
+    setUsername: (username) => { dispatch({ type: 'SET_USER_USERNAME', username: username }) },
+    setBalance: (balance) => { dispatch({ type: 'SET_USER_BALANCE', balance: balance }) }
   }
-  
-  export default connect(mapStateToProps, mapDispatchToProps)(NavBar);
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(NavBar);

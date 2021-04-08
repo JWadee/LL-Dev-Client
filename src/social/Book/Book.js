@@ -1,10 +1,15 @@
 import React, {useEffect, useState} from 'react'
 import organizeBook from '../../utils/organizeBook';
+import isEmpty from '../../utils/isEmpty';
 import '../../css/global/fixtures.css';
+import '../../css/global/book.css';
 
-import {Row, Col, Navbar, Nav} from 'react-bootstrap';
+import {Row, Col, Spinner} from 'react-bootstrap';
 import BetSlip from './BetSlip/BetSlip';
 import SportPrev from './SportPrev';
+import Sport from './Sport';
+
+import BookFooter from './BookFooter';
 
 const Book = () => {
     const [fixts, setfixts] = useState([]);
@@ -12,6 +17,8 @@ const Book = () => {
     const [sports, setSports] = useState([]);
     const [leagues, setLeagues] = useState([]);
     const [book, setBook] = useState([]);
+    const [currDisp, setCurrDisp]= useState({});
+    const [spin, setSpin]= useState(true);
 
     useEffect(()=>{
         const fetchfixts = async() =>{
@@ -40,6 +47,7 @@ const Book = () => {
         if(fixts.length > 0 && leagues.length > 0 && sports.length > 0){
             let orgBook = organizeBook(fixts, leagues, sports);
             setBook(orgBook)
+            setTimeout(()=>setSpin(false),1000)
         }
     },[sports,leagues,fixts])
 
@@ -80,26 +88,52 @@ const Book = () => {
         setBets(tmpBets);
     }
 
+    //function to set display from the sport nav
+    const setDisplay =(sport)=>{
+        if(sport === "all"){
+            setSpin(true)
+            setCurrDisp({});
+            setTimeout(()=>setSpin(false),400);
+        }else{
+            let index = book.findIndex(ArrSprt=> ArrSprt.sport_name === sport)
+            if(index > -1){
+                setCurrDisp(book[index])
+            }
+        }
+
+
+    }
+    
     return (
-        <>  
-            {/* <Navbar bg="dark">
-                <Nav className="mr-auto">
-                    <Nav.Link href="#home">Basketball</Nav.Link>
-                    <Nav.Link href="#features">Football</Nav.Link>
-                    <Nav.Link href="#pricing">Soccer</Nav.Link>
-                    <Nav.Link href="#pricing">Baseball</Nav.Link>
-                </Nav>
-            </Navbar> */}
-            <Row>
-                <Col md={8} sm={12}> 
-                    {book.map(sport=>{
-                        return(<SportPrev key={sport.sport_id} sport={sport} bets={bets} setBets={setBets} removeBet={removeBet}/>) 
-                    })}
-                </Col>
+        <>
+            <Row className="book">
+                {spin ? (<Spinner className="center" animation="border"/>)
+                    :    
+                    (isEmpty(currDisp) ?
+                        (
+                        <Col md={8} sm={12}>
+                            {book.map(sport => {
+                                return (<SportPrev key={sport.sport_id} sport={sport} bets={bets} setBets={setBets} removeBet={removeBet} setCurrDisp={setCurrDisp}/>)
+                            })}
+                        </Col>
+                        )
+                            :
+                        (
+                        <Col md={8} sm={12}>
+                            <Sport key={currDisp.sport_id} sport={currDisp} bets={bets} setBets={setBets} removeBet={removeBet} />
+                        </Col>
+                        )  
+                    )
+                
+                }
+                
+            
+                
                 <Col md={4} sm={12}>
                     <BetSlip bets={bets} removeBets={removeBets} />
                 </Col>
-            </Row>   
+            </Row>
+            <BookFooter setDisplay={setDisplay}/>
         </>
     )
 }

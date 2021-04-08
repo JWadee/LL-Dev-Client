@@ -19,3 +19,11 @@ body{
     border: 2px red;
     height: 100vh
 } */
+
+.left-align{
+    text-align: left;
+}
+
+.center{
+    margin: auto;
+}

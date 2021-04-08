@@ -1,0 +1,43 @@
+.book{
+    height: 80vh;
+    overflow-y: scroll;
+}
+
+.icon{
+    margin: 5px;
+}
+
+.book-nav{
+    position: absolute;
+    left: 50%;
+    top:5px;
+    transform:translateX(-50%)
+}
+
+@media (max-width: 991px) { 
+    .book-footer{
+        position:absolute;
+        bottom: 0;
+        left:0;
+        width:100%;
+        height:56px;
+    }
+}
+
+.see-more-btn{
+    border: 1.5px solid black;
+    background-color: white;
+    color:black;
+    border-radius: 0;
+    font-size: small;
+    margin: 0 auto;
+    margin-bottom: 5px;
+    margin-top: -25px;
+    width: 100%;
+
+}
+
+.see-more-btn:hover{
+    background-color: black;
+    color: white;
+}

@@ -80,7 +80,7 @@ const ContestsPage = (props) => {
         )
     }else return (
         <>
-            <Spinner animation="border"/>
+            <Spinner className="center" animation="border"/>
         </>
     )
 
