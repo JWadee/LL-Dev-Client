@@ -1,12 +1,14 @@
 import React from 'react';
 import { Fragment } from 'react';
-import {Table}from 'react-bootstrap';
+import {Table, Image}from 'react-bootstrap';
 import Fixture from './Fixture';
+import back from '../../images/icons/noun_back_3542560.svg';
 
 const Sport = (props) => {
     return (
         <>  
-            <h4 className="left-align">{props.sport.sport_name}</h4>
+            <div className="back-w-text" onClick={() => props.setDisplay("all")}><Image src={back} width="35" height="auto" />All Sports</div>
+            <h4 className="left-align sport-header">{props.sport.sport_name}</h4>
             {props.sport.leagues.map(league => {
                 return (
                     <Fragment key={league.league_key}>  

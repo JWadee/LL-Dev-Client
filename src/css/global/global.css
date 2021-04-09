@@ -27,3 +27,7 @@ body{
 .center{
     margin: auto;
 }
+
+.back-w-text{
+    text-align: left;
+}

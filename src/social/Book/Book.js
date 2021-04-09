@@ -120,7 +120,7 @@ const Book = () => {
                             :
                         (
                         <Col md={8} sm={12}>
-                            <Sport key={currDisp.sport_id} sport={currDisp} bets={bets} setBets={setBets} removeBet={removeBet} />
+                            <Sport key={currDisp.sport_id} sport={currDisp} bets={bets} setBets={setBets} removeBet={removeBet} setDisplay={setDisplay} />
                         </Col>
                         )  
                     )

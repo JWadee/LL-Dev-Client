@@ -41,3 +41,9 @@
     background-color: black;
     color: white;
 }
+
+.sport-header{
+    background-color: rgb(220,220,220) ;
+    border-radius: 5px;
+    padding: 10px;
+}

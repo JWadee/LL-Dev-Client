@@ -37,7 +37,7 @@ const SportPrev = (props) => {
 
     return (
         <>  
-            <h4 className="left-align">{props.sport.sport_name}</h4>
+            <h4 className="left-align sport-header">{props.sport.sport_name}</h4>
             {prev.map(league => {
                 return (
                     <Fragment key={league.league_key}>  

@@ -1,24 +1,25 @@
 {
   "files": {
-    "main.css": "/static/css/main.9da71c1b.chunk.css",
-    "main.js": "/static/js/main.b7c92f18.chunk.js",
-    "main.js.map": "/static/js/main.b7c92f18.chunk.js.map",
+    "main.css": "/static/css/main.24f30496.chunk.css",
+    "main.js": "/static/js/main.35562c43.chunk.js",
+    "main.js.map": "/static/js/main.35562c43.chunk.js.map",
     "runtime-main.js": "/static/js/runtime-main.8c40394c.js",
     "runtime-main.js.map": "/static/js/runtime-main.8c40394c.js.map",
     "static/css/2.91542726.chunk.css": "/static/css/2.91542726.chunk.css",
-    "static/js/2.a84a152c.chunk.js": "/static/js/2.a84a152c.chunk.js",
-    "static/js/2.a84a152c.chunk.js.map": "/static/js/2.a84a152c.chunk.js.map",
+    "static/js/2.28d54cc1.chunk.js": "/static/js/2.28d54cc1.chunk.js",
+    "static/js/2.28d54cc1.chunk.js.map": "/static/js/2.28d54cc1.chunk.js.map",
     "index.html": "/index.html",
-    "precache-manifest.9300d248294882fb8c925cd40fe2386c.js": "/precache-manifest.9300d248294882fb8c925cd40fe2386c.js",
+    "precache-manifest.fee7d46733a2dfb016dd716a0d236d08.js": "/precache-manifest.fee7d46733a2dfb016dd716a0d236d08.js",
     "service-worker.js": "/service-worker.js",
     "static/css/2.91542726.chunk.css.map": "/static/css/2.91542726.chunk.css.map",
-    "static/css/main.9da71c1b.chunk.css.map": "/static/css/main.9da71c1b.chunk.css.map",
-    "static/js/2.a84a152c.chunk.js.LICENSE.txt": "/static/js/2.a84a152c.chunk.js.LICENSE.txt",
+    "static/css/main.24f30496.chunk.css.map": "/static/css/main.24f30496.chunk.css.map",
+    "static/js/2.28d54cc1.chunk.js.LICENSE.txt": "/static/js/2.28d54cc1.chunk.js.LICENSE.txt",
     "static/media/react-widgets.css": "/static/media/rw-widgets.eceddf47.ttf",
     "static/media/logo.PNG": "/static/media/logo.47646def.PNG",
     "static/media/noun_Basketball_64846.svg": "/static/media/noun_Basketball_64846.0213569f.svg",
     "static/media/noun_Bat_495572.svg": "/static/media/noun_Bat_495572.7312947e.svg",
     "static/media/noun_american football_2153147.svg": "/static/media/noun_american football_2153147.616ef963.svg",
+    "static/media/noun_back_3542560.svg": "/static/media/noun_back_3542560.a9da7532.svg",
     "static/media/noun_more_2269702.svg": "/static/media/noun_more_2269702.25419031.svg",
     "static/media/noun_soccer_2730034.svg": "/static/media/noun_soccer_2730034.aa34ceba.svg",
     "static/media/search.svg": "/static/media/search.a7517423.svg",
@@ -27,8 +28,8 @@
   "entrypoints": [
     "static/js/runtime-main.8c40394c.js",
     "static/css/2.91542726.chunk.css",
-    "static/js/2.a84a152c.chunk.js",
-    "static/css/main.9da71c1b.chunk.css",
-    "static/js/main.b7c92f18.chunk.js"
+    "static/js/2.28d54cc1.chunk.js",
+    "static/css/main.24f30496.chunk.css",
+    "static/js/main.35562c43.chunk.js"
   ]
 }
