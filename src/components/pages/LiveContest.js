@@ -74,6 +74,8 @@ const LiveContest = (props) => {
             return league.intLeagueID
         });
 
+        console.log(leagueIds)
+
         if(leagueIds.length > 0 & props.sports.length > 0){  
             //api parameters to get fixtures
             let body = {
@@ -125,7 +127,7 @@ const LiveContest = (props) => {
         return () => {
           clearInterval(timerId);
         };       
-    }, [props.contest]);
+    }, [props.contest, props.leagues, props.sports]);
 
     //Run on settled bets change, calculate bankroll and update store
     useEffect(()=>{

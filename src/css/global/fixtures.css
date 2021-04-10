@@ -55,3 +55,16 @@ td.lineCol, td.line{
 th.timeHeader{
     width: 25% !important;
 }
+
+td.selected-bet {
+    background-color: rgba(242, 15, 37, 0.2) ; 
+}
+
+
+
+/* css only for medium and large screens */
+@media (min-width: 991px) { 
+    td.line:hover {
+        background-color:#D8D8D8;
+    }
+}

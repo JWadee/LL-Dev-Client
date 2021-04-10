@@ -11,7 +11,6 @@ const BookFooter = (props) => {
     //check when bets prop changes, hide or show bet count on betslip icon
     useEffect(()=>{
         if(props.bets.length > 0){
-            console.log(props.bets.length)
             document.getElementById("betCount").style.display ="block";
         }else{
             document.getElementById("betCount").style.display ="none";
