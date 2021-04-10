@@ -133,8 +133,8 @@ const Book = () => {
                 
             
                 
-                <Col md={4} sm={12}>
-                    <BetSlip bets={bets} removeBets={removeBets} />
+                <Col className="hidden-md" md={4} sm={12}>
+                    <BetSlip  bets={bets} removeBets={removeBets} />
                 </Col>
                 <MobileBetSlip close={handleCancellation} removeBets={removeBets} show={showMobileBetSlip} bets={bets}/>
             </Row>
