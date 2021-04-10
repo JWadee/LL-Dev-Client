@@ -8,7 +8,7 @@ import {Row, Col, Spinner} from 'react-bootstrap';
 import BetSlip from './BetSlip/BetSlip';
 import SportPrev from './SportPrev';
 import Sport from './Sport';
-
+import MobileBetSlip from './BetSlip/MobileBetSlip';
 import BookFooter from './BookFooter';
 
 const Book = () => {
@@ -19,6 +19,7 @@ const Book = () => {
     const [book, setBook] = useState([]);
     const [currDisp, setCurrDisp]= useState({});
     const [spin, setSpin]= useState(true);
+    const [showMobileBetSlip, setShowMobileBetSlip]= useState(false);
 
     useEffect(()=>{
         const fetchfixts = async() =>{
@@ -100,8 +101,11 @@ const Book = () => {
                 setCurrDisp(book[index])
             }
         }
+    }
 
-
+    //Function to handle close mobile bet slip
+    const handleCancellation = () => {
+        setShowMobileBetSlip(false);
     }
     
     return (
@@ -132,8 +136,9 @@ const Book = () => {
                 <Col md={4} sm={12}>
                     <BetSlip bets={bets} removeBets={removeBets} />
                 </Col>
+                <MobileBetSlip close={handleCancellation} removeBets={removeBets} show={showMobileBetSlip} bets={bets}/>
             </Row>
-            <BookFooter setDisplay={setDisplay}/>
+            <BookFooter setDisplay={setDisplay} showSlip={setShowMobileBetSlip} bets={bets}/>
         </>
     )
 }

@@ -1,10 +1,11 @@
 .book{
+    position:relative;
     height: 70vh;
     overflow-y: scroll;
 }
 
 .icon{
-    margin: 5px;
+    margin: 10px;
 }
 
 .book-nav{
@@ -46,4 +47,25 @@
     background-color: rgb(220,220,220) ;
     border-radius: 5px;
     padding: 10px;
+}
+
+#betCount{
+    position: relative;
+    z-index: 10;
+    border-radius: 50%;
+    width: 18px;
+    line-height: 18px;
+    text-align: center;
+    background: red;
+    color: white;
+    font-size: small;
+    margin-top: -45px;
+    margin-left: 25px;
+    opacity: 100%;
+}
+
+#mobile-betslip{
+    margin-top: 50px;
+    max-height: 80vh;
+    overflow-y: scroll;
 }
