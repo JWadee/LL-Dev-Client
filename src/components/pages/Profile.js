@@ -93,19 +93,17 @@ const Profile = (props) => {
   return (
     <>
       <Row className="profile-header">
-        <Col sm={2}>
-          <img src={user.picture} alt="Profile" />
+        <Col sm={12}>
+          <img className="profile" src={user.picture} alt="Profile" /> 
+          <span className="prof-links">5 Posts</span>
+          <span className="prof-links">1 Followers</span>
+          <span className="prof-links">1 Following</span>
+          <p><strong className="username">{user.email}</strong></p>
         </Col>
         <Col sm={10}>
-          <div>
-            {user.email} <Button size="sm" variant="outline-primary" disabled>Edit Profile</Button> <br/>
-            <Button size="sm" variant="outline-primary" disabled>Followers</Button>
-            <Button size="sm" variant="outline-primary" disabled>Following</Button> <br/>
-
-            {"Record: " + record}
-            {"P/L: $" + PL}
-            <Button onClick={() => setShowCreatePost(true)}>New Post</Button>
-          </div>
+            <Button size="sm" variant="outline-primary" disabled>Edit Profile</Button>
+            <span className="prof-stats">{"Record: " + record}</span>
+            <span className="prof-stats">{"P/L: $" + PL}</span>
         </Col>
       </Row>
       <Form className="hidden-lg">

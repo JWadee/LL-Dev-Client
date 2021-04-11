@@ -5,8 +5,11 @@
 }
 
 @media only screen and (max-width: 768px) {
+    body{
+        font-size: large;
+    }
     th{
-        font-size: 13px;;
+        font-size: 13px;
     }
     td{
         font-size: 10px;

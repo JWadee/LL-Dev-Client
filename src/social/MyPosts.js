@@ -1,6 +1,5 @@
 import React from 'react'
-import {Table, Row, Col} from 'react-bootstrap';
-import Leg from '../social/bets/Leg';
+import {Row, Col} from 'react-bootstrap';
 import stringifyOddsAndPoints from '../utils/stringifyOddsAndPoints';
 import '../css/global/posts.css'
 import formatTime from '../utils/formatTime';
@@ -16,14 +15,23 @@ const MyPosts = (props) => {
                 return(
                 <div className="post" key={i}>    
                     <Row>
-                        <Col sm={2}>
-                            <img src={props.user.picture} alt="Profile" />
+                        <Col lg ={2}>
+                            <img src={props.user.picture} className="post-prof" alt="Profile" />   
                         </Col>
+                        <Col lg={10}>
+                            <div className={"post-info"}>
+                                <strong>{props.user.email}</strong>
+                                <p>{timestamp}</p> 
+                            </div>
+                            
+                        </Col>
+                    </Row>
+                    <Row>
                         <Col sm={10}>
                             <Row>
                                 <Col>
-                                    <strong>{props.user.email}    </strong>
-                                    <p>{timestamp}</p>
+                                   
+                                    
                                 </Col>
                             </Row>
                             <Row>

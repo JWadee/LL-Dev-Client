@@ -1,7 +1,11 @@
+table.bet{
+}
+
 table.bet tr td{
     border:none;
     padding: 0px;
-    text-align: left;
+    text-align: left;    
+    font-size: small;
 }
 
 table.bet tr td.odds {

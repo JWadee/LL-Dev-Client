@@ -1,12 +1,11 @@
 import React, {useState, useEffect} from 'react';
-import {Col, Form, Table} from 'react-bootstrap';
+import {Col, Form, Table, Image} from 'react-bootstrap';
 import formatTime from '../../../../utils/formatTime';
 import stringifyOddsAndPoints from '../../../../utils/stringifyOddsAndPoints';
-
+import close from '../../../../images/icons/noun_Close_3850069.svg';
 const Bet = (props) => {
     const [risk, setRisk] = useState("");
     const [win, setWin] = useState("");
-    const [showEditBet, setShowEditBet] = useState(false);
 
     const bet = props.bet;
     //index of bet in array
@@ -59,19 +58,19 @@ const Bet = (props) => {
                     <tr>
                         {(bet.type === "Spread") ? 
                             <td onClick={()=>toggleDetails(i)}>
-                                <i className="arrow down" id={"arrow"+i} ></i> {bet.bet+" "+stringifyOddsAndPoints(bet.handicap) + " ("+stringifyOddsAndPoints(bet.odds)+")"}
+                                <i className="arrow down" id={"arrow"+i} ></i> <strong>{bet.bet+" "+stringifyOddsAndPoints(bet.handicap) + " ("+stringifyOddsAndPoints(bet.odds)+")"}</strong>
                             </td>
                         : 
                         (bet.type === "Total") ?
                             <td onClick={()=>toggleDetails(i)}>
-                                <i className="arrow down" id={"arrow"+i} ></i> {bet.bet+" "+bet.total + " ("+stringifyOddsAndPoints(bet.odds)+")"}
+                                <i className="arrow down" id={"arrow"+i} ></i> <strong>{bet.bet+" "+bet.total + " ("+stringifyOddsAndPoints(bet.odds)+")"}</strong>
                             </td>
                         :
                             <td onClick={()=>toggleDetails(i)}>
-                                <i className="arrow down" id={"arrow"+i} ></i> {bet.bet + " ("+stringifyOddsAndPoints(bet.odds)+")"}
+                                <i className="arrow down" id={"arrow"+i} ></i> <strong>{bet.bet + " ("+stringifyOddsAndPoints(bet.odds)+")"}</strong>
                             </td>
                         }
-                        <td className="odds">{bet.odds.american} <i onClick={()=>props.removeBets([bet.id])}>&times;</i></td> 
+                        <td className="odds">{bet.odds.american}<Image src={close} width="18" height="auto" onClick={()=>props.removeBets([bet.id])} /></td> 
                     </tr>
                     <tr>
                         <td colSpan={2}>{bet.type}</td>

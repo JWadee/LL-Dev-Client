@@ -1,8 +1,9 @@
 import React, {useState, useEffect} from 'react';
-import {Col, Form, Table} from 'react-bootstrap';
+import {Col, Form, Table, Image} from 'react-bootstrap';
 import formatTime from '../../../utils/formatTime';
 import stringifyOddsAndPoints from '../../../utils/stringifyOddsAndPoints';
 import editIcon from '../../../images/icons/editIcon.png';
+import close from '../../../images/icons/noun_Close_3850069.svg';
 import EditBetModal from './EditBetModal';
 
 const Bet = (props) => {
@@ -82,7 +83,7 @@ const Bet = (props) => {
                                 <input type="image" src={editIcon} onClick={()=>setShowEditBet(true)} />
                             </td>
                         }
-                        <td className="odds">{bet.odds.american} <i onClick={()=>props.removeBets([bet.id])}>&times;</i></td> 
+                        <td className="odds">{bet.odds.american}<Image src={close} width="18" height="auto" onClick={()=>props.removeBets([bet.id])} /></td> 
                     </tr>
                     <tr>
                         <td colSpan={2}>{bet.type}</td>
