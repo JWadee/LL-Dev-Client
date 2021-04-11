@@ -1,16 +1,16 @@
 .post{
+    display: flex;
     border-top: 0.5px solid lightblue;
     text-align: left;
     padding: 10px;
     font-size: small;
 }
 
-.post-bet p{
+.post-content p{
     margin:0;
-    border-right: 0.5px solid lightblue;     
 }
 
-.post-bet{
+.post-content{
     margin-right: 0px;
     width: 1000px;
 }
@@ -26,9 +26,15 @@ img.post-prof{
     width: 50px;
     border-radius: 50%;
     margin-right: 2em;
-    margin-top: -10px;
 }
-div.post-info{
+
+div.post-prof-col{
     display: inline-block;
-    height: 50px;
+    width: 75px;
+
+}
+
+div.post-content div{
+    height: fit-content;
+    margin-bottom: 1em;
 }

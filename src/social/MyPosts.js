@@ -14,28 +14,14 @@ const MyPosts = (props) => {
                 let timestamp = strDtm.toLocaleString([], {dateStyle: 'short', timeStyle:'short'});  
                 return(
                 <div className="post" key={i}>    
-                    <Row>
-                        <Col lg ={2}>
+                        <div className="post-prof-col">
                             <img src={props.user.picture} className="post-prof" alt="Profile" />   
-                        </Col>
-                        <Col lg={10}>
+                        </div>
+                        <div className="post-content">
                             <div className={"post-info"}>
                                 <strong>{props.user.email}</strong>
                                 <p>{timestamp}</p> 
                             </div>
-                            
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col sm={10}>
-                            <Row>
-                                <Col>
-                                   
-                                    
-                                </Col>
-                            </Row>
-                            <Row>
-                                <Col md={4} className="post-bet">
                                     {post.bets.map((bet, i)=>{
                                         if(bet.type === "Straight"){
                                             const leg = bet.legs[0];
@@ -79,14 +65,12 @@ const MyPosts = (props) => {
                                             return <></>;
                                         }
                                     })}
-                                </Col>
-                                <Col className="writeup">
-                                    <p>{post.contents.writeup}</p>
-                                </Col>
-                                
-                            </Row>
-                        </Col>
-                    </Row>
+                                    <div className="writeup">
+                                        <p>{post.contents.writeup}</p>
+                                    </div>
+                                </div>
+
+
                 </div>
                 )    
             })}
