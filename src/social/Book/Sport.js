@@ -7,7 +7,7 @@ import back from '../../images/icons/noun_back_3542560.svg';
 const Sport = (props) => {
     return (
         <>  
-            <div className="back-w-text" onClick={() => props.setDisplay("all")}><Image src={back} width="35" height="auto" />All Sports</div>
+            <div className="left-align" onClick={() => props.setDisplay("all")}><Image src={back} width="35" height="auto" />All Sports</div>
             <h4 className="left-align sport-header">{props.sport.sport_name}</h4>
             {props.sport.leagues.map(league => {
                 return (

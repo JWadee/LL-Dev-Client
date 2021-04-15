@@ -1,10 +1,11 @@
 import React, {useState, useEffect} from 'react'
-import {Table, Alert, Row, Col} from 'react-bootstrap';
+import {Table, Alert, Row, Col, Image} from 'react-bootstrap';
 import SettledBets from './bets/SettledBets';
 import formatCurrency from '../../../utils/formatCurrency';
 import fetchContestBets from '../../../api/bets/fetchContestBets';
 import isEmpty from '../../../utils/isEmpty';
 import '../../../css/global/tables.css'
+import back from '../../../images/icons/noun_back_3542560.svg';
 
 const Leaderboard = (props) => {
     const [contestant, setContestant] = useState({})
@@ -26,20 +27,16 @@ const Leaderboard = (props) => {
             record = contestant.w +"-"+ contestant.l
         }
         return(
-            <>    
-
-                <Row>
-                    <Col sm={2}>
-                        <button onClick={()=>setContestant({})}>Back</button>
-                    </Col>
-                    <Col sm={10}>
-                        <h5>{contestant.email}</h5>
-                        <p>{"Place: "+contestant.place +"     Bankroll: "+bankroll+"     Record: "+record} </p>
-                    </Col>
-
-                </Row>
+            <div className="left-align">    
+                <div onClick={()=>setContestant({})}><Image src={back} width="35" height="auto" />Back</div>
+                <div>
+                    <strong>{contestant.email}</strong>
+                    <p className="no-margin">{"Place: "+contestant.place}</p>
+                    <p className="no-margin">{"Bankroll: "+bankroll}</p>
+                    <p className="no-margin">{"Record: "+record}</p>
+                </div>
                 <SettledBets settledBets={contestant.bets} />
-            </>
+            </div>
         )
     }else{
         return (
@@ -73,7 +70,6 @@ const Leaderboard = (props) => {
                                 :
                                 (<td />)
                             }
-                            
                         </tr>
                     )
                 })}

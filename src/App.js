@@ -1,10 +1,12 @@
 import React, {useEffect} from 'react';
 import { useAuth0 } from "./react-auth0-spa";
 import { Router, Route, Switch } from "react-router-dom";
+import {Spinner} from 'react-bootstrap';
 import history from "./utils/history";
 import { connect } from 'react-redux';
 import fetchSports from './api/fetchSports';
 import fetchLeagues from './api/fetchLeagues';
+import fetchPersonalBets from './api/bets/fetchPersonalBets';
 
 //CSS
 import './css/global/media.css'
@@ -31,17 +33,32 @@ function App(props) {
   useEffect(()=> { 
     const asyncFunc = async() => {
       let sports = await fetchSports();
-      let leagues = await fetchLeagues();;
+      let leagues = await fetchLeagues();
 
       props.setSports(sports);
       props.setLeagues(leagues);
+
+
     }
 
     asyncFunc();
   },[])
 
+  //run when user is set
+  useEffect(()=>{
+    const asyncFunc = async() => {
+      let bets = await fetchPersonalBets(props.user_id);
+      props.setOpenBets(bets.open);
+      props.setSettledBets(bets.settled)
+    }
+
+    if(props.user_id > 0){
+      asyncFunc();
+    }
+  },[props.user_id])
+
   if (loading) {
-    return <div>Loading...</div>;
+    return <div><Spinner className="center" animation="border"/></div>;
   }
   return (
     <Container className="App">
@@ -66,6 +83,10 @@ function App(props) {
 
 const mapStateToProps = (state) => {
   return {
+    user_id: state.user.ID,
+    openBets: state.user.openBets,
+    settledBets: state.user.settledBets
+
   }
 }
 
@@ -73,7 +94,8 @@ const mapDispatchToProps = ( dispatch ) => {
   return{
     setSports: sports => { dispatch({type: 'SET_SPORTS', sports: sports })},   
     setLeagues: leagues => { dispatch({type: 'SET_LEAGUES', leagues: leagues })},      
-   
+    setOpenBets: bets => { dispatch({ type: 'SET_PERS_OPEN_BETS', bets: bets }) },
+    setSettledBets: bets => { dispatch({ type: 'SET_PERS_SETTLED_BETS', bets: bets }) },
   }
 }
 

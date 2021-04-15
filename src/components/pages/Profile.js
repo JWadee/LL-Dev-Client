@@ -5,7 +5,6 @@ import { connect } from 'react-redux';
 import OpenBets from '../../social/bets/OpenBets';
 import SettledBets from '../../social/bets/SettledBets';
 import MyPosts from '../../social/MyPosts';
-import CPModal from "../../social/forms/createPost/CPModal";
 import '../../css/global/profile.css';
 
 const Profile = (props) => {
@@ -58,30 +57,12 @@ const Profile = (props) => {
 
   //Function to run when user_id is set and fetch bets
   useEffect(() => {
-    const fetchBets = async () => {
-      const response = await fetch('https://api.lineleaders.net/bets/personal?id=' + props.user_id);
-      const bets = await response.json();
-      //separate into open and settled and set redux state
-      let open = [];
-      let settled = [];
-
-      bets.forEach(bet => {
-        if (bet.result === "W" || bet.result === "L" || bet.Result === "P") {
-          settled.push(bet);
-        } else {
-          open.push(bet);
-        }
-      })
-      props.setOpenBets(open);
-      props.setSettledBets(settled);
-    }
-
     const fetchPosts = async () => {
       const response = await fetch('https://api.lineleaders.net/posts/byAccount?ID=' + props.user_id);
       const posts = await response.json();
       props.setPosts(posts);
     }
-    fetchBets();
+
     fetchPosts();
   }, [props.user_id])
 
@@ -126,10 +107,9 @@ const Profile = (props) => {
           <OpenBets />
         </Tab>
         <Tab eventKey="settled" title="Settled">
-          <SettledBets />
+          <SettledBets settledBets={props.settledBets} />
         </Tab>
       </Tabs>
-      <CPModal close={handleCancellation} show={showCreatePost} openBets={props.openBets} userid={props.user_id} />
     </>
   );
 };
@@ -145,8 +125,6 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    setOpenBets: bets => { dispatch({ type: 'SET_OPEN_BETS', bets: bets }) },
-    setSettledBets: bets => { dispatch({ type: 'SET_SETTLED_BETS', bets: bets }) },
     setPosts: posts => { dispatch({ type: 'SET_POSTS', posts: posts }) }
   }
 }

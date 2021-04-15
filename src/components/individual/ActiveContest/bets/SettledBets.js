@@ -3,10 +3,8 @@ import {Table } from 'react-bootstrap';
 import stringifyOddsAndPoints from '../../../../utils/stringifyOddsAndPoints';
 import Leg from './Leg';
 import '../../../../css/betsTable.css';
-import { connect } from 'react-redux';
 
 const SettledBets = (props) => {  
-    console.log(props)  
     return (
         <Table responsive>
             <thead>

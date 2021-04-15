@@ -27,11 +27,11 @@ const userReducer = (state = initValues, action) =>{
             state = {...state, balance: action.balance}
             break;
         }
-        case 'SET_OPEN_BETS': {
+        case 'SET_PERS_OPEN_BETS': {
             state =  {...state, openBets: action.bets};
             break;
         }
-        case 'SET_SETTLED_BETS': {
+        case 'SET_PERS_SETTLED_BETS': {
             state =  {...state, settledBets: action.bets};
             break;
         }        

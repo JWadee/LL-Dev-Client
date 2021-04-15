@@ -3,6 +3,7 @@ import {Table, Modal} from 'react-bootstrap';
 import Leaderboard from '../../ActiveContest/Leaderboard';
 import isEmpty from'../../../../utils/isEmpty';
 import fetchLeaderboards from '../../../../api/fetchLeaderboards';
+import '../../../../css/leaderboard.css';
 
 const MyHistoryContests = (props) => {
     const [leaderboards,setLeaderboards] = useState([]);
@@ -60,7 +61,7 @@ const MyHistoryContests = (props) => {
                     ))}
                 </tbody>
             </Table>
-            <Modal show={displayLb} onHide={handleClose} size="xl">
+            <Modal id="leaderboard-modal" show={displayLb} onHide={handleClose} size="lg">
                 <Modal.Header closeButton>
                     <Modal.Title>{contest.strContestName}<br />Final Standings</Modal.Title>
                 </Modal.Header>

@@ -2,7 +2,6 @@ import React from 'react';
 import {Table } from 'react-bootstrap';
 import Leg from './Leg';
 import '../../css/betsTable.css';
-import { connect } from 'react-redux';
 import stringifyOddsAndPoints from '../../utils/stringifyOddsAndPoints';
 
 const SettledBets = (props) => {    
@@ -52,10 +51,6 @@ const SettledBets = (props) => {
 }
 
 
-const mapStateToProps = (state) => {
-    return {
-        settledBets: state.contest.settledBets
-    }
-  }
 
-  export default connect(mapStateToProps)(SettledBets);
+
+export default SettledBets;
