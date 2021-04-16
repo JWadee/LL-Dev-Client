@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useAuth0 } from "../../react-auth0-spa";
-import { Navbar, Nav, NavDropdown, Image} from 'react-bootstrap';
+import { Navbar, Nav, NavDropdown, Image } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 import { connect } from 'react-redux';
 import logo from '../../images/logo.PNG';
@@ -63,6 +63,8 @@ const NavBar = (props) => {
     setShowCreatePost(false);
   }
 
+  console.log(user)
+
   return (
     <>
       <Navbar className="main-nav" collapseOnSelect variant="dark" bg="dark" expand="lg" sticky="top">
@@ -105,14 +107,16 @@ const NavBar = (props) => {
           </Nav>
         </Navbar.Collapse>
         {/* Show if not logged in */}
-        {!isAuthenticated && (
-          <Nav.Link onClick={() => loginWithRedirect({})}>Log in</Nav.Link>
-        )}
-        <Nav className="d-flex flex-row order-2 order-lg-3 icons">
+        {!isAuthenticated ? (
+          <Nav.Link onClick={() => loginWithRedirect({})}>Log in</Nav.Link>)
+          :
+          (<Nav className="d-flex flex-row order-2 order-lg-3 icons">
             <Nav.Item className="icon" onClick={() => setShowCreatePost(true)}><Image src={write} width="24" height="auto" /></Nav.Item>
             {/* <Nav.Item className="icon" onClick={() => alert("search")}><Image src={search} width="28" height="auto" /> </Nav.Item> */}
-        </Nav>
-        
+          </Nav>)
+        }
+
+
 
       </Navbar>
       <CPModal close={handleCancellation} show={showCreatePost} openBets={props.openBets} userid={props.ID} user={user} />
