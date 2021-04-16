@@ -58,7 +58,7 @@ function App(props) {
   },[props.user_id])
 
   if (loading) {
-    return <div><Spinner className="center" animation="border"/></div>;
+    return <div className="center-text"><Spinner className="center" animation="border"/></div>;
   }
   return (
     <Container className="App">

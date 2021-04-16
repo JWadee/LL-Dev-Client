@@ -115,11 +115,14 @@ const NavBar = (props) => {
             {/* <Nav.Item className="icon" onClick={() => alert("search")}><Image src={search} width="28" height="auto" /> </Nav.Item> */}
           </Nav>)
         }
-
-
-
       </Navbar>
-      <CPModal close={handleCancellation} show={showCreatePost} openBets={props.openBets} userid={props.ID} user={user} />
+      {user != undefined ?
+        (
+          <CPModal close={handleCancellation} show={showCreatePost} openBets={props.openBets} userid={props.ID} user={user} />
+        )
+        :
+        (<></>)
+      }
     </>
   );
 };
